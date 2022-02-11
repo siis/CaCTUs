@@ -1,0 +1,150 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>RAND_DRBG_new</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#RETURN-VALUES">RETURN VALUES</a></li>
+  <li><a href="#NOTES">NOTES</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#HISTORY">HISTORY</a></li>
+  <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>RAND_DRBG_new_ex, RAND_DRBG_new, RAND_DRBG_set, RAND_DRBG_set_defaults, RAND_DRBG_instantiate, RAND_DRBG_uninstantiate, RAND_DRBG_free, RAND_DRBG_verify_zeroization - initialize and cleanup a RAND_DRBG instance</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code> #include &lt;openssl/rand_drbg.h&gt;
+
+ RAND_DRBG *RAND_DRBG_new_ex(OPENSSL_CTX *ctx,
+                             int type,
+                             unsigned int flags,
+                             RAND_DRBG *parent);
+
+ RAND_DRBG *RAND_DRBG_new(int type,
+                          unsigned int flags,
+                          RAND_DRBG *parent);
+
+ int RAND_DRBG_set_defaults(int type, unsigned int flags);
+
+ int RAND_DRBG_instantiate(RAND_DRBG *drbg,
+                           const unsigned char *pers, size_t perslen);
+
+ int RAND_DRBG_uninstantiate(RAND_DRBG *drbg);
+
+ void RAND_DRBG_free(RAND_DRBG *drbg);
+ int RAND_DRBG_verify_zeroization(RAND_DRBG *drbg);</code></pre>
+
+<p>Deprecated since OpenSSL 3.0, can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+
+<pre><code> int RAND_DRBG_set(RAND_DRBG *drbg,
+                   int type, unsigned int flags);</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>RAND_DRBG_new_ex() creates a new DRBG instance of the given <b>type</b> for the given OPENSSL_CTX &lt;ctx&gt;. The &lt;ctx&gt; parameter can be NULL in which case the default OPENSSL_CTX is used. RAND_DRBG_new() is the same as RAND_DRBG_new_ex() except that the default OPENSSL_CTX is always used.</p>
+
+<p>RAND_DRBG_set() initializes the <b>drbg</b> with the given <b>type</b> and <b>flags</b>. This function is deprecated. Applications should instead use RAND_DRBG_new_ex() to create a new DRBG.</p>
+
+<p>RAND_DRBG_set_defaults() sets the default <b>type</b> and <b>flags</b> for new DRBG instances.</p>
+
+<p>The DRBG types are AES-CTR, HMAC and HASH so <b>type</b> can be one of the following values:</p>
+
+<p>NID_aes_128_ctr, NID_aes_192_ctr, NID_aes_256_ctr, NID_sha1, NID_sha224, NID_sha256, NID_sha384, NID_sha512, NID_sha512_224, NID_sha512_256, NID_sha3_224, NID_sha3_256, NID_sha3_384 or NID_sha3_512.</p>
+
+<p>If this method is not called then the default type is given by NID_aes_256_ctr and the default flags are zero.</p>
+
+<p>Before the DRBG can be used to generate random bits, it is necessary to set its type and to instantiate it.</p>
+
+<p>The optional <b>flags</b> argument specifies a set of bit flags which can be joined using the | operator. The supported flags are:</p>
+
+<dl>
+
+<dt id="RAND_DRBG_FLAG_CTR_NO_DF">RAND_DRBG_FLAG_CTR_NO_DF</dt>
+<dd>
+
+<p>Disables the use of the derivation function ctr_df. For an explanation, see [NIST SP 800-90A Rev. 1].</p>
+
+</dd>
+<dt id="RAND_DRBG_FLAG_HMAC">RAND_DRBG_FLAG_HMAC</dt>
+<dd>
+
+<p>Enables use of HMAC instead of the HASH DRBG.</p>
+
+</dd>
+<dt id="RAND_DRBG_FLAG_PRIMARY">RAND_DRBG_FLAG_PRIMARY</dt>
+<dd>
+
+</dd>
+<dt id="RAND_DRBG_FLAG_PUBLIC">RAND_DRBG_FLAG_PUBLIC</dt>
+<dd>
+
+</dd>
+<dt id="RAND_DRBG_FLAG_PRIVATE">RAND_DRBG_FLAG_PRIVATE</dt>
+<dd>
+
+<p>These 3 flags can be used to set the individual DRBG types created. Multiple calls are required to set the types to different values. If none of these 3 flags are used, then the same type and flags are used for all 3 DRBGs in the <b>drbg</b> chain (&lt;master&gt;, &lt;public&gt; and &lt;private&gt;).</p>
+
+</dd>
+</dl>
+
+<p>If a <b>parent</b> instance is specified then this will be used instead of the default entropy source for reseeding the <b>drbg</b>. It is said that the <b>drbg</b> is <i>chained</i> to its <b>parent</b>. For more information, see the NOTES section.</p>
+
+<p>RAND_DRBG_instantiate() seeds the <b>drbg</b> instance using random input from trusted entropy sources. Optionally, a personalization string <b>pers</b> of length <b>perslen</b> can be specified. To omit the personalization string, set <b>pers</b>=NULL and <b>perslen</b>=0;</p>
+
+<p>RAND_DRBG_uninstantiate() clears the internal state of the <b>drbg</b> and puts it back in the uninstantiated state.</p>
+
+<p>RAND_DRBG_verify_zeroization() confirms if the internal DRBG state is currently zeroed.</p>
+
+<h1 id="RETURN-VALUES">RETURN VALUES</h1>
+
+<p>RAND_DRBG_new_ex() and RAND_DRBG_new() return a pointer to a DRBG instance allocated on the heap.</p>
+
+<p>RAND_DRBG_set(), RAND_DRBG_instantiate(), and RAND_DRBG_uninstantiate() return 1 on success, and 0 on failure.</p>
+
+<p>RAND_DRBG_verify_zeroization() returns 1 if the DRBG state is current zeroed, and 0 if not.</p>
+
+<p>RAND_DRBG_free() does not return a value.</p>
+
+<h1 id="NOTES">NOTES</h1>
+
+<p>The DRBG design supports <i>chaining</i>, which means that a DRBG instance can use another <b>parent</b> DRBG instance instead of the default entropy source to obtain fresh random input for reseeding, provided that <b>parent</b> DRBG instance was properly instantiated, either from a trusted entropy source, or from yet another parent DRBG instance. For a detailed description of the reseeding process, see <a href="../man7/RAND_DRBG.html">RAND_DRBG(7)</a>.</p>
+
+<p>The default DRBG type and flags are applied only during creation of a DRBG instance. To ensure that they are applied to the global and thread-local DRBG instances (&lt;master&gt;, resp. &lt;public&gt; and &lt;private&gt;), it is necessary to call RAND_DRBG_set_defaults() before creating any thread and before calling any cryptographic routines that obtain random data directly or indirectly.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../man3/RAND_DRBG_generate.html">RAND_DRBG_generate(3)</a>, <a href="../man7/RAND_DRBG.html">RAND_DRBG(7)</a></p>
+
+<h1 id="HISTORY">HISTORY</h1>
+
+<p>The RAND_DRBG_set() function was deprecated in OpenSSL 3.0.</p>
+
+<p>The RAND_DRBG functions were added in OpenSSL 1.1.1.</p>
+
+<h1 id="COPYRIGHT">COPYRIGHT</h1>
+
+<p>Copyright 2017-2020 The OpenSSL Project Authors. All Rights Reserved.</p>
+
+<p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
+
+
+</body>
+
+</html>
+
+

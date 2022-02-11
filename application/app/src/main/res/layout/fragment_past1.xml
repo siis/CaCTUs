@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:id="@+id/pastTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.023"
+            android:fontFamily="sans-serif"
+            android:text="@string/pastTitle"
+            android:textColor="@color/colorPrimary"
+            android:textColorHighlight="@color/colorSecondary"
+            android:textSize="@dimen/title_size"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="@string/selectFootage"
+                android:textAllCaps="false"
+                android:textColor="@color/colorDark"
+                android:textSize="@dimen/font_size"
+                android:enabled="false"
+                android:textStyle="bold"
+                android:gravity="left"
+                android:paddingLeft="40dp"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="@string/from"
+                android:textAllCaps="false"
+                android:textColor="@color/colorDark"
+                android:textSize="@dimen/small_size"
+                android:enabled="false"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:paddingLeft="20dp"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <EditText
+                android:id="@+id/editTextAddFromDate"
+                android:layout_width="320dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:hint="@string/date"
+                android:background="@drawable/inputdate"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:focusableInTouchMode="false"
+                android:textStyle="bold"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <EditText
+                android:id="@+id/editTextAddFromTime"
+                android:layout_width="320dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:hint="@string/time"
+                android:background="@drawable/inputtime"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:focusableInTouchMode="false"
+                android:textStyle="bold"
+                />
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fromtoseparator"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="@string/to"
+                android:textAllCaps="false"
+                android:textColor="@color/colorDark"
+                android:textSize="@dimen/small_size"
+                android:enabled="false"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:paddingLeft="20dp"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <EditText
+                android:id="@+id/editTextAddToDate"
+                android:layout_width="320dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:hint="@string/date"
+                android:background="@drawable/inputdate"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:focusableInTouchMode="false"
+                android:textStyle="bold"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <EditText
+                android:id="@+id/editTextAddToTime"
+                android:layout_width="320dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:hint="@string/time"
+                android:background="@drawable/inputtime"
+                android:textAlignment="center"
+                android:focusableInTouchMode="false"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                />
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <Button
+                android:id="@+id/nextAddUser4"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_colorbis"
+                android:fontFamily="sans-serif"
+                android:text="@string/nextButton"
+                android:textAllCaps="false"
+                android:textColor="@drawable/text_colorbis"
+                android:textSize="@dimen/small_size"
+                android:textStyle="bold"
+                />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

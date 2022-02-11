@@ -1,0 +1,11 @@
+prefix=/home/ykb5060/Documents/siislab/videoapp/app/src/cpp/openssl-3.0.0-alpha6/build
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: OpenSSL-libssl
+Description: Secure Sockets Layer and cryptography libraries
+Version: 3.0.0-alpha6
+Requires.private: libcrypto
+Libs: -L${libdir} -lssl
+Cflags: -I${includedir}

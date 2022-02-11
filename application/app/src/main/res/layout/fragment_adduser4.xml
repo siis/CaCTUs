@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center">
+
+<!--        <EditText-->
+<!--            android:id="@+id/editTextAddUserName"-->
+<!--            android:layout_width="320dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:gravity="center"-->
+<!--            android:hint="@string/addUser4Item1"-->
+<!--            android:background="@drawable/inputtext"-->
+<!--            android:inputType="text"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textSize="24sp"-->
+<!--            android:textStyle="bold" />-->
+
+
+<!--        <Space-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="20dp" />-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/addUser4Item2"
+            android:textAllCaps="false"
+            android:textColor="@color/colorDark"
+            android:textSize="@dimen/font_size"
+            android:enabled="false"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:paddingLeft="40dp"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/from"
+            android:textAllCaps="false"
+            android:textColor="@color/colorDark"
+            android:textSize="@dimen/small_size"
+            android:enabled="false"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <EditText
+            android:id="@+id/editTextAddFromDate"
+            android:layout_width="320dp"
+            android:layout_height="60dp"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:hint="@string/date"
+            android:background="@drawable/inputdate"
+            android:inputType="date"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <EditText
+            android:id="@+id/editTextAddFromTime"
+            android:layout_width="320dp"
+            android:layout_height="60dp"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:hint="@string/time"
+            android:background="@drawable/inputtime"
+            android:inputType="time"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            />
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/fromtoseparator"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/to"
+            android:textAllCaps="false"
+            android:textColor="@color/colorDark"
+            android:textSize="@dimen/small_size"
+            android:enabled="false"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <EditText
+            android:id="@+id/editTextAddToDate"
+            android:layout_width="320dp"
+            android:layout_height="60dp"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:hint="@string/date"
+            android:background="@drawable/inputdate"
+            android:inputType="datetime"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <EditText
+            android:id="@+id/editTextAddToTime"
+            android:layout_width="320dp"
+            android:layout_height="60dp"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:hint="@string/time"
+            android:background="@drawable/inputtime"
+            android:inputType="datetime"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            />
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/nextAddUser4"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_colorbis"
+            android:fontFamily="sans-serif"
+            android:text="@string/nextButton"
+            android:textAllCaps="false"
+            android:textColor="@drawable/text_colorbis"
+            android:textSize="@dimen/small_size"
+            android:textStyle="bold"
+            />
+
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/addUser6Item1"
+            android:textAllCaps="false"
+            android:textColor="@color/colorDark"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingTop="60dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/addUser6Item2"
+            android:textAllCaps="false"
+            android:textColor="@color/colorDark"
+            android:textSize="@dimen/small_size"
+            android:gravity="center"
+            android:paddingTop="15dp"
+            android:paddingBottom="30dp"/>
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/recoverysuccessimg"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+
+
+        <Button
+            android:id="@+id/doneAddUser"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_colorbis"
+            android:fontFamily="sans-serif"
+            android:text="@string/doneButton"
+            android:textAllCaps="false"
+            android:textColor="@drawable/text_colorbis"
+            android:textSize="@dimen/small_size"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+</FrameLayout>

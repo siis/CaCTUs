@@ -1,0 +1,7 @@
+src/obj/*
+!src/obj/.gitkeep
+src/keys/*
+!src/keys/.gitkeep
+src/img/*
+!src/img/.gitkeep
+src/main

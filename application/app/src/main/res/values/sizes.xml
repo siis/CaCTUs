@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="vertical_margin">16dp</dimen>
+    <dimen name="title_size">40sp</dimen>
+    <dimen name="title_size2">35sp</dimen>
+    <dimen name="font_size">30sp</dimen>
+    <dimen name="menu_size">30sp</dimen>
+    <dimen name="small_size">20sp</dimen>
+</resources>

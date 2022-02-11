@@ -1,0 +1,111 @@
+<resources>
+    <string name="app_name">CaCTUs</string>
+
+    <string name="recoveryTitle">Access Recovery</string>
+    <string name="delegationTitle">Add User</string>
+    <string name="liveTitle">Live Feed</string>
+    <string name="pastTitle">Past Footage</string>
+    <string name="settingsTitle">Settings</string>
+    <string name="setupTitle">New System</string>
+    <string name="welcomeTitle">Welcome! What would you like to do?</string>
+    <string name="resetTitle">Factory Reset</string>
+
+    <string name="welcomeMenu1">Configure a new system</string>
+    <string name="welcomeMenu2">Recover access to my system</string>
+    <string name="welcomeMenu3">Access a system as shared user</string>
+
+    <string name="btButton">Enable Bluetooth</string>
+    <string name="btConnect">Connect</string>
+    <string name="scanButton">Scan QR Code</string>
+    <string name="nextButton">Next</string>
+    <string name="doneButton">Done</string>
+    <string name="okButton">Ok</string>
+    <string name="cancelButton">Cancel</string>
+    <string name="proceedButton">Proceed</string>
+    <string name="warningButton">Warning</string>
+
+    <string name="defaultPassword">12345</string>
+    <string name="defaultNetwork">Name</string>
+
+    <string name="btRecovery">Enable Bluetooth in order to connect to your system</string>
+    <string name="btErrorDescription">We were unable to connect with your camera. Please be sure to restart the camera before scanning the QR code.</string>
+    <string name="btError1">Try again</string>
+    <string name="btError2">Back to main menu</string>
+    <string name="cameraRecovery">Scan the QR code on the back of your camera device with your smartphone.</string>
+    <string name="qrcodeRecovery">Next, use your security camera to scan the QR code below.</string>
+    <string name="passwordRecovery1">Now enter the recovery password given during the initial setup of your system.</string>
+    <string name="passwordRecovery2">Recovery password</string>
+    <string name="passwordRecoveryError">Incorrect password.</string>
+    <string name="correctPasswordRecovery">Correct password! Please wait while we recover your access.</string>
+
+    <string name="bisaddUser1">Enable bluetooth in order to connect with the admin\'s device.</string>
+    <string name="bisaddUser1bis">Follow the instructions on the admin\'s device.</string>
+    <string name="bisaddUser2">Show this QR Code to the admin user.</string>
+    <string name="bisaddUser3">Now use this device to scan the QR Code displayed on the admin\'s device.</string>
+    <string name="bisaddUser3Error">We were unable to connect with the admin\'s device. Please be sure both devices have Bluetooth enabled.</string>
+    <string name="bisaddUser3ErrorItem1">Try again</string>
+    <string name="bisaddUser4">Please wait while the admin user finishes to delegate you access to the system.</string>
+    <string name="bisaddUser5Item1">You\'ve successfully been added as a new user!</string>
+    <string name="bisaddUser5Item2">You may now turn off Bluetooth if you\'d like.</string>
+
+    <string name="addUser1">Enable bluetooth in order to connect with the added user\'s device.</string>
+    <string name="addUser1bis">Select the added user\'s device in the list below to connect to it.</string>
+    <string name="addUser2">Use this device to scan the QR Code displayed on the added user\'s device.</string>
+    <string name="addUser2Error">We were unable to connect with the added user\'s device. Please be sure both devices have Bluetooth enabled.</string>
+    <string name="addUser2ErrorItem1">Try again</string>
+    <string name="addUser2ErrorItem2">Exit add user process</string>
+    <string name="addUser3">Show this QR code to the added user.</string>
+    <string name="addUser4Item1">Name of new added user</string>
+    <string name="addUser4Item2">Allow new user to access footage</string>
+    <string name="addUser5">Please wait while we grant access of the indicated footage to your new added user.</string>
+    <string name="addUser6Item1">You\'ve successfully added a new user!</string>
+    <string name="addUser6Item2">You may now turn off Bluetooth if you\'d like.</string>
+
+    <string name="from">From</string>
+    <string name="date">Date (MM/DD/YYYY)</string>
+    <string name="time">Time (HH:MM:SS)</string>
+    <string name="zero">0</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+    <string name="to">To</string>
+    <string name="timestampLive">Downloading footage...</string>
+
+    <string name="newSystem1">Please enable Bluetooth in order to connect to your camera device.</string>
+    <string name="newSystem2">Scan the QR code on the back of your camera device with your smartphone.</string>
+<!--    <string name="newSystem2">Plug in (or restart if already plugged in) your camera. Then, scan the QR code on the back with your device camera.</string>-->
+<!--    <string name="newSystem2Error1">We were unable to connect with your camera. Please be sure to restart the camera before scanning the QR code.</string>-->
+    <string name="newSystem2Error1">We were unable to connect with your camera.</string>
+    <string name="newSystem2Error2">Try again</string>
+    <string name="newSystem2Error3">Back to main menu</string>
+    <string name="newSystem3">Next, use your security camera to scan the QR code below.</string>
+    <string name="newSystem4">Connection successful! Please wait while we initialize your system to protect your privacy.</string>
+    <string name="newSystem5">Choose a WiFi network for your camera to connect to.</string>
+    <string name="newSystem5Item1">Enter the name and password of a WiFi network for your camera to connect to.</string>
+    <string name="newSystem5Item2">Wifi network</string>
+    <string name="newSystem5Item3">Wifi password</string>
+    <string name="newSystem5Error1">Something went wrong with the WiFi connection. Please be sure to select a nearby network.</string>
+    <string name="newSystem5Error2">Try again</string>
+    <string name="newSystem5Error3">Back to main menu</string>
+    <string name="newSystem6Item1">This password will allow you to recover access to your system should something happen to this device. Write it down somewhere safe.</string>
+    <string name="newSystem6Item2">I have written this password down somewhere safe and recognize that without it, I will be unable to recover access to my system if needed.</string>
+    <string name="newSystem6Item3">Do not forget to check the box!</string>
+    <string name="newSystem7Item1">You\'ve successfully completed the setup for your system!</string>
+    <string name="newSystem7Item2">You may now turn off Bluetooth if you\'d like.</string>
+    <string name="newSystem7Item3">Enjoy!</string>
+
+
+    <string name="pastFootageError">You do not have access to view this footage. Permission can be granted by the main user of this system.</string>
+    <string name="selectFootage">Select footage</string>
+    <string name="returnFootage">\u003c Return to select footage</string>
+
+    <string name="resetMessage">Are you sure you want to factory reset your system? You will lose all access to previously recorded videos and will have to configure from scratch your system to use it again.</string>
+    <string name="resetDone">Factory reset done!</string>
+
+    <string name="liveErrorNoAccess">You do not have access to view this footage.</string>
+    <string name="viewDone">No more footage to view.</string>
+    <string name="pastDateError">The dates and times chosen are not valid.</string>
+    <string name="videoSaved">Video saved!</string>
+    <string name="renderingTitle">Video rendering in progress</string>
+    <string name="rendering">Please wait, it might take some time...</string>
+
+</resources>

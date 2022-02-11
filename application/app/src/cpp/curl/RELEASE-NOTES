@@ -1,0 +1,33 @@
+curl and libcurl 7.73.1
+
+ Public curl releases:         196
+ Command line options:         234
+ curl_easy_setopt() options:   278
+ Public functions in libcurl:  85
+ Contributors:                 2271
+
+This release includes the following changes:
+
+ o
+
+This release includes the following bugfixes:
+
+ o src/tool_filetime: disable -Wformat on mingw for this file [2]
+ o test122[12]: remove these two tests [1]
+
+This release includes the following known bugs:
+
+ o see docs/KNOWN_BUGS (https://curl.haxx.se/docs/knownbugs.html)
+
+This release would not have looked like this without help, code, reports and
+advice from friends like these:
+
+  b9a1 on github, Daniel Stenberg, Marc Hörsken,
+  (3 contributors)
+
+        Thanks! (and sorry if I forgot to mention someone)
+
+References to bug reports and discussions on issues:
+
+ [1] = https://curl.haxx.se/bug/?i=6080
+ [2] = https://curl.haxx.se/bug/?i=6079

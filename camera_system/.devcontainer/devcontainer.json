@@ -1,0 +1,5 @@
+{
+  "name": "OpenSSL 3.0.1",
+  "dockerFile": "Dockerfile",
+  "appPort": 6666,
+}

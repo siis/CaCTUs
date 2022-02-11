@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/passwordRecovery1"
+            android:textAllCaps="false"
+            android:textColor="@color/colorDark"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingTop="60dp"
+            />
+
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/samplepasscodebis"-->
+<!--            android:contentDescription="@string/defaultPassword"-->
+<!--            android:gravity="center_horizontal" />-->
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/recoveryInput"
+                android:layout_width="360dp"
+                android:layout_height="130dp"
+                android:background="@drawable/inputrecoverypassword"
+                android:contentDescription="@string/defaultPassword"
+                android:gravity="center" />
+
+            <LinearLayout
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <EditText
+                        android:id="@+id/editTextNumberPassword1"
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="7AE1"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:importantForAutofill="no" />
+
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <EditText
+                        android:id="@+id/editTextNumberPassword2"
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="A462"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:importantForAutofill="no" />
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <EditText
+                        android:id="@+id/editTextNumberPassword3"
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="0579"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:importantForAutofill="no" />
+
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+                    <EditText
+                        android:id="@+id/editTextNumberPassword3bis"
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="EE70"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:importantForAutofill="no" />
+
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <EditText
+                        android:id="@+id/editTextNumberPassword4"
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="CB73"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:importantForAutofill="no" />
+
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <EditText
+                        android:id="@+id/editTextNumberPassword5"
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="A360"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:importantForAutofill="no" />
+
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <EditText
+                        android:id="@+id/editTextNumberPassword6"
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="0137"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:importantForAutofill="no" />
+
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <EditText
+                        android:id="@+id/editTextNumberPassword6bis"
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="5D8E"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:importantForAutofill="no" />
+
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+
+        <Button
+            android:id="@+id/nextRecovery4"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_colorbis"
+            android:fontFamily="sans-serif"
+            android:text="@string/nextButton"
+            android:textAllCaps="false"
+            android:textColor="@drawable/text_colorbis"
+            android:textSize="@dimen/small_size"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+</FrameLayout>

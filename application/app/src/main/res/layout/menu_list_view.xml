@@ -1,0 +1,68 @@
+<FrameLayout
+    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_gravity="start"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+        <ImageButton
+            android:id="@+id/menuBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/menucloseicon"
+            android:background="@color/colorWhite"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"/>
+
+        <Button
+            android:id="@+id/liveBt"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_color"
+            android:fontFamily="sans-serif"
+            android:text="@string/liveTitle"
+            android:textAllCaps="false"
+            android:textColor="@drawable/text_color"
+            android:textSize="@dimen/menu_size"
+            android:textStyle="bold"
+            android:onClick="launchLive"/>
+
+
+        <Button
+            android:id="@+id/pastBt"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_color"
+            android:fontFamily="sans-serif"
+            android:text="@string/pastTitle"
+            android:textAllCaps="false"
+            android:textColor="@drawable/text_color"
+            android:textSize="@dimen/menu_size"
+            android:textStyle="bold"
+            android:onClick="launchPast"/>
+
+
+        <Button
+            android:id="@+id/settingsBt"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_color"
+            android:fontFamily="sans-serif"
+            android:text="@string/settingsTitle"
+            android:textAllCaps="false"
+            android:textColor="@drawable/text_color"
+            android:textSize="@dimen/menu_size"
+            android:textStyle="bold"
+            android:onClick="launchSettings"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>
