@@ -2,7 +2,7 @@
 
 try
 {
-    $pdo = new PDO('mysql:host=localhost;dbname=frames;charset=utf8', 'username', 'password');
+    $pdo = new PDO('mysql:host=mariadb-cactus;dbname=frames;charset=utf8', 'user1', 'password1');
 }
 catch (Exception $e)
 {

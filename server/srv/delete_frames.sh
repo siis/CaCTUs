@@ -1,5 +1,5 @@
 #!/bin/sh
-rm -r /srv/cameras/camera*
-mkdir /srv/cameras/cameraX ##add other camera folders if neeeded
-chown -R www-data:root /srv/cameras
+rm -r /var/www/html/cameras/camera*
+mkdir /var/www/html/cameras/cameraX ##add other camera folders if neeeded
+chown -R www-data:root /var/www/html/cameras
 php ./truncate.php

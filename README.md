@@ -35,8 +35,8 @@ An `AWS EC2 t3.small` instance was used to deploy a Nginx web server. Upon reque
 
 
 The system (and the code) is composed of the three following components, please refer to the corresponding `README.md` file into each folder for more details: 
-1. **camera_system:** the C source code of the application to install on the Raspberry Pi used as the camera device 
-2. **server:** configuration files, database, and basic web interface to upload and download the encrypted frames
-3. **Smartphone Application:** Android application used for the performance evaluation
+1. **application:** Android application used for the performance evaluation
+2. **camera_system:** the C source code of the application to install on the Raspberry Pi used as the camera device 
+3. **server:** configuration files, database, and basic web interface to upload and download the encrypted frames
 
 

@@ -2,7 +2,7 @@
 
 try
 {
-    $pdo = new PDO('mysql:host=localhost;dbname=frames;charset=utf8', 'username', 'password');
+    $pdo = new PDO('mysql:host=mariadb-cactus;dbname=frames;charset=utf8', 'user1', 'password1');
 }
 catch (Exception $e)
 {
@@ -13,7 +13,7 @@ if( $_SERVER["HTTP_X_FILE"] && $_SERVER["HTTP_CORRECT_FILENAME"] ) {
 
     $timestamp = $_SERVER["HTTP_CORRECT_FILENAME"];
     $temp_name = $_SERVER["HTTP_X_FILE"];
-    $name = '/srv/cameras/cameraX/' . $timestamp;
+    $name = '/var/www/html/cameras/cameraX/' . $timestamp;
 
     $result = rename($temp_name, $name);
     if ($result){
