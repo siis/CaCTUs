@@ -2,7 +2,7 @@
 
 For convenience in the deployment, we provide a `docker-compose.yml` configuration file.
 
-1. Edit the `nginx.conf` as well as the `srv` folder accordingly to the number of cameras you want to support. In the php files in the `srv` folder edit the user and password (`user1` and `password1` by default) that will be used to connect to the database and that we will configure in step 5. 
+1. Edit the `nginx.conf` as well as the `srv` folder accordingly to the number of cameras you want to support. In the php files in the `srv` folder edit the user and password (`user1` and `password1` by default) that will be used to connect to the database and that we will configure in step 4. 
 2. Create a volume to store the database-related information:
    ```
    docker volume create mariadb_vol
