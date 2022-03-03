@@ -32,3 +32,5 @@ For convenience in the deployment, we provide a `docker-compose.yml` configurati
     );
     ```
 Note: we additionally provide a `delete_frames.sh` and `truncate.php` scripts to facilitate clean up of files and database tables between several runs. These scripts must be adapted to the according number of camera devices and tables being used.
+
+Finally make sure that no firewall rule blocks connections to ports 80 and 8080 on your host.
