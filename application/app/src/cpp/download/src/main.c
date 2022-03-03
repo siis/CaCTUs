@@ -38,8 +38,8 @@ int launch_download(unsigned long long t1, unsigned long long t2, char *folder,
   unsigned long long new_last_time = 0;
   int trials = 0;
 
-  char *url = "http://ec2-3-129-12-148.us-east-2.compute.amazonaws.com/camera1/"; //server_ip_or_hostname/cameraX
-  char *url_index = "http://ec2-3-129-12-148.us-east-2.compute.amazonaws.com/index1.php?t1=";
+  char *url = "http://server_ip_or_hostname/cameraX";
+  char *url_index = "http://server_ip_or_hostname/indexX.php?t1=";
   char *pubkey_camera =
       "/data/data/com.example.CaCTUs/keys/public_key_camera.pem";
   unsigned char *previous_hash = NULL;
@@ -92,15 +92,6 @@ int launch_download(unsigned long long t1, unsigned long long t2, char *folder,
 
   return (EXIT_SUCCESS);
 }
-
-//int main() {
-//  int depth_key_tree = 32;
-//  int key_rotation_time = 10000;         // ms
-//  unsigned long long t1 = 0;             // in the past or now
-//  unsigned long long t2 = 1711937885529; // in the future
-//  char *folder = "/data/data/com.example.CaCTUs/frames/";
-//  return launch_download(t1, t2, folder, depth_key_tree, key_rotation_time);
-//}
 
 JNIEXPORT jint JNICALL
 Java_edu_psu_cse_cactus_DownloadFramesThread_runMainDownloadC(

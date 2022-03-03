@@ -11,4 +11,4 @@ C code and C Libraries for application
 
 # Cross compilation
 
-See `CMakeLists.txt` and `build.sh` scripts for the different steps used to cross compile each library
+See the `CMakeLists.txt` file and the `build.sh` scripts inside each dependency folder for the different steps used to cross compile each library. You may need to modify some of these scripts based on the target architecture of your smartphone.
