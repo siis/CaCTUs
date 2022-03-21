@@ -7,7 +7,7 @@ RUN apt-get update && \
     apt-get clean autoclean && \
     apt-get autoremove -y
 
-ENV LATEST_OPENSSL_VERSION="3.0.1"
+ENV LATEST_OPENSSL_VERSION="3.0.2"
 
 RUN wget --no-check-certificate -O /tmp/openssl-${LATEST_OPENSSL_VERSION}.tar.gz "https://www.openssl.org/source/openssl-${LATEST_OPENSSL_VERSION}.tar.gz" \
     && tar -xvf /tmp/openssl-${LATEST_OPENSSL_VERSION}.tar.gz -C /tmp/ \

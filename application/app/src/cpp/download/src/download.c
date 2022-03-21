@@ -125,6 +125,9 @@ int download_file(const char *filename, unsigned long long last_time,
   // Define URL and path where to store the frames on the phone
   sprintf(url_file, url_format, file_time);
   sprintf(filepath, folder_format, file_time);
+  __android_log_write(ANDROID_LOG_INFO, "Info", url_file);
+  __android_log_write(ANDROID_LOG_INFO, "Info", filepath);
+
 
   if (file_time > last_time) {
     *new_last_time = file_time;
@@ -155,54 +158,33 @@ int download_file(const char *filename, unsigned long long last_time,
       // retrieve decryption key
       unsigned char *key;
       key = NULL;
-      int iv_len = 16;
-      unsigned char iv[17] = {0};
-//      int hash_len = 32;
-//      int sig_len = 256;
 
       if (!find_key_for_timestamp(file_time, tree, false, &key)) {
         exit(EXIT_FAILURE);
       }
 
-      memcpy(iv, enc_frame.ptr + enc_frame.len - iv_len, iv_len);
+      int iv_len = 16;
+      unsigned char iv[17] = {0};
+      int hash_len = 16;
+      current_hash = OPENSSL_malloc(hash_len);
+
+      memcpy(iv, enc_frame.ptr + enc_frame.len - iv_len - hash_len, iv_len);
+      memcpy(current_hash, enc_frame.ptr + enc_frame.len - hash_len, hash_len);
+
       // Decrypt
       int decrypted_len;
-      unsigned char decrypted_text[enc_frame.len - iv_len];
-      decrypted_len = decrypt(enc_frame.ptr, enc_frame.len - iv_len,
-                              key,  iv, decrypted_text);
+      unsigned char decrypted_text[enc_frame.len - iv_len - hash_len];
+      __android_log_write(ANDROID_LOG_INFO, "Info", "Before decrypt");
+      decrypted_len = gcm_decrypt(enc_frame.ptr, enc_frame.len - iv_len - hash_len, NULL, 0, current_hash,
+                              key,  iv, iv_len, decrypted_text);
+      __android_log_write(ANDROID_LOG_INFO, "Info", "decrypted");
 
-      //            //HMAC
-      //            current_hash = OPENSSL_malloc(32);
-      //            hmac_sha256(enc_frame.ptr, enc_frame.len - iv_len -
-      //            hash_len, iv, iv_len, &file_time, current_hash, key,
-      //            32);
-      //
-      //            if (verify_hmac_sha256(enc_frame.ptr, enc_frame.len - iv_len
-      //            - hash_len, iv, iv_len, &file_time, enc_frame.ptr +
-      //            enc_frame.len - hash_len, hash_len, key, 32) ==
-      //            EXIT_FAILURE){
-      //                __android_log_write(ANDROID_LOG_INFO, "verification hash
-      //                is", "incorrect"); exit(EXIT_FAILURE);
-      //            }
 
-      //            Compute signature
+      if (decrypted_len < 0){
+        __android_log_write(ANDROID_LOG_INFO, "verification hash is", "incorrect");
+        exit(EXIT_FAILURE);
+      }
 
-      //            unsigned char sig[hash_len];
-      //            if (previous_hash == NULL){
-      //                if(verify_sign_rsa(NULL, 0, current_hash, 32,
-      //                enc_frame.ptr + enc_frame.len - hash_len, hash_len,
-      //                pkey) == EXIT_SUCCESS){ }else{
-      //                    __android_log_write(ANDROID_LOG_INFO, "verification
-      //                    signature is", "incorrect"); exit(EXIT_FAILURE);
-      //                }
-      //            }else{
-      //                if(verify_sign_rsa(previous_hash, hash_len,
-      //                current_hash, 32, enc_frame.ptr + enc_frame.len -
-      //                hash_len, hash_len, pkey) == EXIT_SUCCESS){ }else{
-      //                    __android_log_write(ANDROID_LOG_INFO, "verification
-      //                    signature is", "incorrect"); exit(EXIT_FAILURE);
-      //                }
-      //            }
       OPENSSL_cleanse(iv, iv_len);
       // write decrypted frame to disk
       umask(002);
@@ -212,14 +194,11 @@ int download_file(const char *filename, unsigned long long last_time,
       fclose(fp);
 
       OPENSSL_cleanse(decrypted_text, decrypted_len);
-      //          OPENSSL_cleanse(sig, sig_len);
 
       if (previous_hash) {
         OPENSSL_free(previous_hash);
       }
-
-      //            previous_hash = current_hash;
-      previous_hash = NULL;
+      previous_hash = current_hash;
       current_hash = NULL;
 
     } else {

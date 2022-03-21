@@ -4,7 +4,7 @@
 sudo apt-get install screen software-properties-common git gcc make gdb build-essential autoconf man nano curl wget libtool pkg-config libcurl4-gnutls-dev libgcrypt-dev texinfo libbluetooth-dev
 
 # OpenSSL 3 install
-export LATEST_OPENSSL_VERSION="3.0.1"
+export LATEST_OPENSSL_VERSION="3.0.2"
 
 wget --no-check-certificate -O /tmp/openssl-${LATEST_OPENSSL_VERSION}.tar.gz "https://www.openssl.org/source/openssl-${LATEST_OPENSSL_VERSION}.tar.gz"
 tar -xvf /tmp/openssl-${LATEST_OPENSSL_VERSION}.tar.gz -C /tmp/

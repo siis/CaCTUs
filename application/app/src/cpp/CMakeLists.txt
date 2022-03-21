@@ -22,15 +22,10 @@ cmake_minimum_required(VERSION 3.4.1)
 
 # OPENSSL 3.0
 add_library(openssl STATIC IMPORTED)
-set_target_properties(openssl PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/openssl-3.0.0-alpha6/build/lib/libssl.a)
+set_target_properties(openssl PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/openssl-3.0.2/build/lib/libssl.a)
 add_library(crypto STATIC IMPORTED)
-set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/openssl-3.0.0-alpha6/build/lib/libcrypto.a)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/openssl-3.0.0-alpha6/build/include)
-
-## LIBCONFIG
-#add_library(libconfig STATIC IMPORTED)
-#set_target_properties(libconfig PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/libconfig-1.7.2/build/lib/libconfig.a)
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libconfig-1.7.2/build/include)
+set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/openssl-3.0.2/build/lib/libcrypto.a)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/openssl-3.0.2/build/include)
 
 # ZLIB
 add_library(zlib STATIC IMPORTED)

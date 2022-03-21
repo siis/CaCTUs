@@ -20,6 +20,9 @@ $(ODIR)/%.o: %.c $(DEPS)
 main: $(OBJ)
 	$(CC) -g -o $@ $^ $(CFLAGS) $(LIBS)
 
+perf_eval: $(OBJ)
+	$(CC) -DPERF -g -o $@ $^ $(CFLAGS) $(LIBS)
+
 .PHONY: clean
 clean:
 	rm -f $(ODIR)/*.o core img/* main

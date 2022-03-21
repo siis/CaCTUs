@@ -326,43 +326,37 @@ void process_image(const void *p, int size, bool *recording, char *upload_url,
   if (!find_key_for_timestamp(current_time, tree, false, &key)) {
     return;
   }
+#ifdef PERF
+  unsigned long long time_after_key_extraction =
+      get_current_time_in_milliseconds();
+#endif
 
+  // EVP Authenticated Encryption using GCM mode
   int iv_len = 16;
   unsigned char iv[iv_len];
   generateRandBytes(iv_len, iv);
+  int hash_len = 16;
+  current_hash = OPENSSL_malloc(hash_len);
 
-  // Encrypt
-  cipher_len = encrypt((unsigned char *)p, size, key, iv, cipher);
+  cipher_len = gcm_encrypt((unsigned char *)p, size, NULL, 0, key, iv, iv_len,
+                           cipher, current_hash);
+#ifdef PERF
+  unsigned long long time_after_encrypt = get_current_time_in_milliseconds();
+#endif
 
-  // // HMAC
-  // current_hash = OPENSSL_malloc(32);
-  // size_t hash_len = 32;
-  // hash_len = hmac_sha256(cipher, cipher_len, iv, iv_len, &current_time,
-  //                        current_hash, key, 32);
-
-  // // Compute signature
-  // size_t sig_len = 256;
-  // unsigned char sig[sig_len];
-  // if (previous_hash == NULL) {
-  //   sig_len = sign_rsa(NULL, 0, current_hash, hash_len, sig, pkey);
-  // } else {
-  //   sig_len =
-  //       sign_rsa(previous_hash, hash_len, current_hash, hash_len, sig, pkey);
-  // }
-
-  // write cipher + sig to disk
+  // write cipherdata + iv + tag/hash
   FILE *fp = fopen(filepath, "wb");
-  // fwrite(p, size, 1, fp); //non encrypted frame
-  fwrite(cipher, cipher_len, 1, fp); // cipher
-  fwrite(iv, iv_len, 1, fp);         // add iv
-  // fwrite(current_hash, hash_len, 1, fp); // add hash
-  // fwrite(sig, sig_len, 1, fp);           // add signature
+  fwrite(cipher, cipher_len, 1, fp);     // add cipher
+  fwrite(iv, iv_len, 1, fp);             // add iv
+  fwrite(current_hash, hash_len, 1, fp); // add tag/hash
   fflush(fp);
   fclose(fp);
+#ifdef PERF
+  unsigned long long time_after_writing = get_current_time_in_milliseconds();
+#endif
 
   OPENSSL_cleanse(iv, iv_len);
   OPENSSL_cleanse(cipher, cipher_len);
-  // OPENSSL_cleanse(sig, sig_len);
 
   if (previous_hash) {
     OPENSSL_free(previous_hash);
@@ -378,6 +372,13 @@ void process_image(const void *p, int size, bool *recording, char *upload_url,
   if (!system(transfer_command)) {
     /* Errors ignored */
   }
+
+#ifdef PERF
+  FILE *f = fopen("camera.csv", "a");
+  fprintf(f, "%llu,%llu,%llu,%llu\n", current_time, time_after_key_extraction,
+          time_after_encrypt, time_after_writing);
+  fclose(f);
+#endif
 
   counterFrames += 1;
   if (counterFrames >= 1000) {

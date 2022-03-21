@@ -18,6 +18,14 @@ To cite the paper:
 }
 ```
 ---
+
+## Cloning this repository and initializing the submodules
+
+``` 
+git clone https://github.com/siis/CaCTUs.git
+cd CaCTUs
+git submodule update --init --recursive
+```
 ## Experimental Setup
 
 ### Camera Device

@@ -1,6 +1,12 @@
 [submodule "application/app/src/cpp/openssl"]
 	path = application/app/src/cpp/openssl
 	url = https://github.com/openssl/openssl.git
-[submodule "application/app/src/cpp/libconfig"]
-	path = application/app/src/cpp/libconfig
-	url = https://github.com/hyperrealm/libconfig.git
+[submodule "application/app/src/cpp/curl"]
+	path = application/app/src/cpp/curl
+	url = https://github.com/curl/curl.git
+[submodule "application/app/src/cpp/tidy-html5"]
+	path = application/app/src/cpp/tidy-html5
+	url = https://github.com/htacg/tidy-html5.git
+[submodule "application/app/src/cpp/zlib"]
+	path = application/app/src/cpp/zlib
+	url = https://github.com/madler/zlib.git

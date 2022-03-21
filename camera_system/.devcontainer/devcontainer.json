@@ -1,5 +1,5 @@
 {
-  "name": "OpenSSL 3.0.1",
+  "name": "OpenSSL 3.0.2",
   "dockerFile": "Dockerfile",
   "appPort": 6666,
 }

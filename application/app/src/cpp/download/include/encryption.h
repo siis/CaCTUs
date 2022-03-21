@@ -73,20 +73,40 @@ unsigned char *getPrivateKey(EVP_PKEY *pkey);
 void generateRandBytes(int size, unsigned char *output);
 
 /**
+ * AES 256 CBC encryption
+ * Input: plaintext to encrypt, size text, key, iv
+ * Output: encrypted text in ciphertext (via pointer param), size ciphertext
+ */
+int cbc_encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
+                unsigned char *iv, unsigned char *ciphertext);
+
+/**
+ * AES 256 CBC decryption
+ * Input: ciphertext to decrypt, size text, key, iv
+ * Output: decrypted text in plaintext (via pointer param), size plaintext
+ */
+int cbc_decrypt(unsigned char *ciphertext, int ciphertext_len,
+                unsigned char *key, unsigned char *iv,
+                unsigned char *plaintext);
+
+/**
  * AES 256 GCM encryption
  * Input: plaintext to encrypt, size text, key, iv
  * Output: encrypted text in ciphertext (via pointer param), size ciphertext
  */
-int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
-            unsigned char *iv, unsigned char *ciphertext);
+int gcm_encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *aad,
+                int aad_len, unsigned char *key, unsigned char *iv, int iv_len,
+                unsigned char *ciphertext, unsigned char *tag);
 
 /**
  * AES 256 GCM decryption
  * Input: ciphertext to decrypt, size text, key, iv
  * Output: decrypted text in plaintext (via pointer param), size plaintext
  */
-int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
-            unsigned char *iv, unsigned char *plaintext);
+int gcm_decrypt(unsigned char *ciphertext, int ciphertext_len,
+                unsigned char *aad, int aad_len, unsigned char *tag,
+                unsigned char *key, unsigned char *iv, int iv_len,
+                unsigned char *plaintext);
 
 /**
  * HKDF Key Derivation
