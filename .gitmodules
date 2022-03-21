@@ -1,0 +1,6 @@
+[submodule "application/app/src/cpp/openssl"]
+	path = application/app/src/cpp/openssl
+	url = https://github.com/openssl/openssl.git
+[submodule "application/app/src/cpp/libconfig"]
+	path = application/app/src/cpp/libconfig
+	url = https://github.com/hyperrealm/libconfig.git
