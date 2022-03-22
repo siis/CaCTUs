@@ -551,31 +551,27 @@ int verify_hmac_sha256(unsigned char *message, int message_len,
   return (result == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
-size_t sign_rsa(unsigned char *previous_hash, int previous_hash_len,
-                unsigned char *current_hash, int current_hash_len,
-                unsigned char *sig, EVP_PKEY *pkey) {
+size_t sign_rsa(unsigned char *msg, int msg_len, unsigned char *sig,
+                EVP_PKEY *pkey) {
   EVP_MD_CTX *mdctx = NULL;
-  const EVP_MD *md = NULL;
   size_t sig_len = 0;
 
   if (!(mdctx = EVP_MD_CTX_create()))
     handleErrors();
 
-  if (!(md = EVP_get_digestbyname("SHA256")))
+  /* Initialize the DigestSign operation */
+  if (1 != EVP_DigestSignInit(mdctx, NULL, EVP_sha256(), NULL, pkey))
     handleErrors();
 
-  if (EVP_DigestInit_ex(mdctx, md, NULL) != 1)
+  if (EVP_DigestSignUpdate(mdctx, msg, msg_len) != 1)
     handleErrors();
 
-  if (EVP_DigestSignInit(mdctx, NULL, md, NULL, pkey) != 1)
+  /* Finalize the DigestSign operation */
+  /* First call EVP_DigestSignFinal with a NULL sig parameter to obtain the
+   * length of the signature. Length is returned in sig_len */
+  if (EVP_DigestSignFinal(mdctx, NULL, &sig_len) != 1)
     handleErrors();
-
-  if (EVP_DigestSignUpdate(mdctx, previous_hash, previous_hash_len) != 1)
-    handleErrors();
-
-  if (EVP_DigestSignUpdate(mdctx, current_hash, current_hash_len) != 1)
-    handleErrors();
-
+  /* Obtain the signature */
   if (EVP_DigestSignFinal(mdctx, sig, &sig_len) != 1)
     handleErrors();
 
@@ -583,29 +579,18 @@ size_t sign_rsa(unsigned char *previous_hash, int previous_hash_len,
   return sig_len;
 }
 
-int verify_sign_rsa(unsigned char *previous_hash, int previous_hash_len,
-                    unsigned char *current_hash, int current_hash_len,
-                    unsigned char *sig, int sig_len, EVP_PKEY *pkey) {
+int verify_sign_rsa(unsigned char *msg, int msg_len, unsigned char *sig,
+                    int sig_len, EVP_PKEY *pkey) {
   EVP_MD_CTX *mdctx = NULL;
-  const EVP_MD *md = NULL;
   int result = EXIT_FAILURE;
 
   if (!(mdctx = EVP_MD_CTX_create()))
     handleErrors();
 
-  if (!(md = EVP_get_digestbyname("SHA256")))
+  if (EVP_DigestVerifyInit(mdctx, NULL, EVP_sha256(), NULL, pkey) != 1)
     handleErrors();
 
-  if (EVP_DigestInit_ex(mdctx, md, NULL) != 1)
-    handleErrors();
-
-  if (EVP_DigestVerifyInit(mdctx, NULL, md, NULL, pkey) != 1)
-    handleErrors();
-
-  if (EVP_DigestVerifyUpdate(mdctx, previous_hash, previous_hash_len) != 1)
-    handleErrors();
-
-  if (EVP_DigestVerifyUpdate(mdctx, current_hash, current_hash_len) != 1)
+  if (EVP_DigestVerifyUpdate(mdctx, msg, msg_len) != 1)
     handleErrors();
 
   /* Clear any errors for the call below */

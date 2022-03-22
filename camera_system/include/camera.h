@@ -40,7 +40,6 @@ void init_device(char *dev_name, int *fd, int frame_width, int frame_rate,
 void start_capturing(int *fd, unsigned int n_buffers);
 void mainloop(int *fd, bool *recording, unsigned int n_buffers,
               struct buffer **buffers, char *upload_url, key_tree *tree,
-              unsigned char *previous_hash, unsigned char *current_hash,
               EVP_PKEY *pkey, setup_ret_args_t *);
 
 void stop_capturing(int *fd);
@@ -54,10 +53,8 @@ void uninit_device(unsigned int n_buffers, struct buffer **buffers);
 
 int read_frame(int *fd, unsigned int n_buffers, struct buffer **buffers,
                bool *recording, char *upload_url, key_tree *tree,
-               unsigned char *previous_hash, unsigned char *current_hash,
                EVP_PKEY *pkey, setup_ret_args_t *);
 
 void process_image(const void *p, int size, bool *recording, char *upload_url,
-                   key_tree *tree, unsigned char *previous_hash,
-                   unsigned char *current_hash, EVP_PKEY *pkey);
+                   key_tree *tree, EVP_PKEY *pkey);
 #endif

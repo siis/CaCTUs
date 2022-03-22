@@ -11,8 +11,7 @@ size_t write_cb(char *in, size_t size, size_t nmemb, TidyBuffer *out) {
 void parse(TidyNode node, unsigned long long last_time,
            unsigned long long *new_last_time, key_tree *tree,
            unsigned long long *t1, unsigned long long *t2, char *folder_format,
-           char *url_format, unsigned char *previous_hash,
-           unsigned char *current_hash, EVP_PKEY *pkey) {
+           char *url_format, EVP_PKEY *pkey) {
   TidyNode child;
 
   // recursive parsing of all children
@@ -22,13 +21,12 @@ void parse(TidyNode node, unsigned long long last_time,
     TidyAttr hrefAttr = tidyAttrGetById(child, TidyAttr_HREF);
     if (hrefAttr && tidyAttrValue(hrefAttr)) {
       download_file(tidyAttrValue(hrefAttr), last_time, new_last_time, tree, t1,
-                    t2, folder_format, url_format, previous_hash, current_hash,
-                    pkey);
+                    t2, folder_format, url_format, pkey);
     }
 
     // recursive call to traverse the tree
     parse(child, last_time, new_last_time, tree, t1, t2, folder_format,
-          url_format, previous_hash, current_hash, pkey);
+          url_format, pkey);
   }
 }
 
@@ -38,8 +36,7 @@ int retrieve_and_parse_html_index(char *url, unsigned long long last_time,
                                   key_tree *tree, unsigned long long *t1,
                                   unsigned long long *t2, char *folder_format,
                                   char *url_format,
-                                  unsigned char *previous_hash,
-                                  unsigned char *current_hash, EVP_PKEY *pkey) {
+                                  EVP_PKEY *pkey) {
 
   // CURL
   CURL *curl_handle;
@@ -75,7 +72,7 @@ int retrieve_and_parse_html_index(char *url, unsigned long long last_time,
   if (err == CURLE_OK) {
     tidyParseBuffer(index_doc, &index_buf); // parse with Tidy
     parse(tidyGetBody(index_doc), last_time, new_last_time, tree, t1, t2,
-          folder_format, url_format, previous_hash, current_hash, pkey);
+          folder_format, url_format, pkey);
   } else {
     fprintf(stderr, "%s\n", curl_errbuf);
     exit(EXIT_FAILURE);
@@ -114,7 +111,6 @@ int download_file(const char *filename, unsigned long long last_time,
                   unsigned long long *new_last_time, key_tree *tree,
                   unsigned long long *t1, unsigned long long *t2,
                   char *folder_format, char *url_format,
-                  unsigned char *previous_hash, unsigned char *current_hash,
                   EVP_PKEY *pkey) {
 
   unsigned long long file_time;
@@ -125,9 +121,6 @@ int download_file(const char *filename, unsigned long long last_time,
   // Define URL and path where to store the frames on the phone
   sprintf(url_file, url_format, file_time);
   sprintf(filepath, folder_format, file_time);
-  __android_log_write(ANDROID_LOG_INFO, "Info", url_file);
-  __android_log_write(ANDROID_LOG_INFO, "Info", filepath);
-
 
   if (file_time > last_time) {
     *new_last_time = file_time;
@@ -164,28 +157,34 @@ int download_file(const char *filename, unsigned long long last_time,
       }
 
       int iv_len = 16;
-      unsigned char iv[17] = {0};
-      int hash_len = 16;
-      current_hash = OPENSSL_malloc(hash_len);
+      unsigned char iv[iv_len];
+      int tag_len = 16;
+      unsigned char tag[tag_len];
+      int sig_len = 256;
 
-      memcpy(iv, enc_frame.ptr + enc_frame.len - iv_len - hash_len, iv_len);
-      memcpy(current_hash, enc_frame.ptr + enc_frame.len - hash_len, hash_len);
+      memcpy(iv, enc_frame.ptr + enc_frame.len - iv_len - tag_len - sig_len, iv_len);
+      memcpy(tag, enc_frame.ptr + enc_frame.len - tag_len - sig_len, tag_len);
 
       // Decrypt
       int decrypted_len;
-      unsigned char decrypted_text[enc_frame.len - iv_len - hash_len];
-      __android_log_write(ANDROID_LOG_INFO, "Info", "Before decrypt");
-      decrypted_len = gcm_decrypt(enc_frame.ptr, enc_frame.len - iv_len - hash_len, NULL, 0, current_hash,
+      unsigned char decrypted_text[enc_frame.len - iv_len - tag_len - sig_len];
+      decrypted_len = gcm_decrypt(enc_frame.ptr, enc_frame.len - iv_len - tag_len - sig_len, (unsigned char *) &file_time, sizeof(unsigned long long), tag,
                               key,  iv, iv_len, decrypted_text);
-      __android_log_write(ANDROID_LOG_INFO, "Info", "decrypted");
-
 
       if (decrypted_len < 0){
-        __android_log_write(ANDROID_LOG_INFO, "verification hash is", "incorrect");
+        __android_log_write(ANDROID_LOG_INFO, "verification tag is", "incorrect");
         exit(EXIT_FAILURE);
+      }
+      // Verify signature
+      unsigned char sig[sig_len];
+      if (verify_sign_rsa(tag, tag_len,enc_frame.ptr + enc_frame.len - sig_len, sig_len, pkey) != EXIT_SUCCESS){
+          __android_log_write(ANDROID_LOG_INFO, "verification signature is", "incorrect");
+          exit(EXIT_FAILURE);
       }
 
       OPENSSL_cleanse(iv, iv_len);
+      OPENSSL_cleanse(tag, tag_len);
+      OPENSSL_cleanse(sig, sig_len);
       // write decrypted frame to disk
       umask(002);
       FILE *fp = fopen(filepath, "wb");
@@ -195,11 +194,6 @@ int download_file(const char *filename, unsigned long long last_time,
 
       OPENSSL_cleanse(decrypted_text, decrypted_len);
 
-      if (previous_hash) {
-        OPENSSL_free(previous_hash);
-      }
-      previous_hash = current_hash;
-      current_hash = NULL;
 
     } else {
       fprintf(stderr, "%s\n", curl_errbuf);

@@ -67,8 +67,6 @@ int main(void) {
   unsigned int n_buffers;
   bool recording = true;
   dev_name = "/dev/video0";
-  unsigned char *previous_hash = NULL;
-  unsigned char *current_hash = NULL;
 
   open_device(dev_name, &fd);
 
@@ -79,20 +77,13 @@ int main(void) {
   start_capturing(&fd, n_buffers);
 
   mainloop(&fd, &recording, n_buffers, &buffers, system_config->upload_url,
-           tree, previous_hash, current_hash, private_key_camera, NULL);
+           tree, private_key_camera, NULL);
 
   stop_capturing(&fd);
 
   uninit_device(n_buffers, &buffers);
 
   close_device(&fd);
-
-  if (previous_hash) {
-    OPENSSL_free(previous_hash);
-  }
-  if (current_hash) {
-    OPENSSL_free(current_hash);
-  }
 
   // destroy config struct
   config_destroy(config);

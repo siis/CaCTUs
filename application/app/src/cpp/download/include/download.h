@@ -31,24 +31,19 @@ int retrieve_and_parse_html_index(char *url, unsigned long long last_time,
                                   unsigned long long *new_last_time,
                                   key_tree *tree, unsigned long long *t1,
                                   unsigned long long *t2, char *folder_format,
-                                  char *url_format,
-                                  unsigned char *previous_hash,
-                                  unsigned char *current_hash, EVP_PKEY *pkey);
+                                  char *url_format, EVP_PKEY *pkey);
 
 // parse HTML page to retrieve <a href="link"> links
 void parse(TidyNode node, unsigned long long last_time,
            unsigned long long *new_last_time, key_tree *tree,
            unsigned long long *t1, unsigned long long *t2, char *folder_format,
-           char *url_format, unsigned char *previous_hash,
-           unsigned char *current_hash, EVP_PKEY *pkey);
+           char *url_format, EVP_PKEY *pkey);
 
 // process each link
 int download_file(const char *filename, unsigned long long last_time,
                   unsigned long long *new_last_time, key_tree *tree,
                   unsigned long long *t1, unsigned long long *t2,
-                  char *folder_format, char *url_format,
-                  unsigned char *previous_hash, unsigned char *current_hash,
-                  EVP_PKEY *pkey);
+                  char *folder_format, char *url_format, EVP_PKEY *pkey);
 
 // utils function
 bool extract_substring_from_to(unsigned char *string, int from, int to,

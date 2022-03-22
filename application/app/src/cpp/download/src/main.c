@@ -38,12 +38,10 @@ int launch_download(unsigned long long t1, unsigned long long t2, char *folder,
   unsigned long long new_last_time = 0;
   int trials = 0;
 
-  char *url = "http://server_ip_or_hostname/cameraX";
+  char *url = "http://server_ip_or_hostname/cameraX/";
   char *url_index = "http://server_ip_or_hostname/indexX.php?t1=";
   char *pubkey_camera =
       "/data/data/com.example.CaCTUs/keys/public_key_camera.pem";
-  unsigned char *previous_hash = NULL;
-  unsigned char *current_hash = NULL;
 
   char url_format[200];
   char url_request[300];
@@ -74,20 +72,13 @@ int launch_download(unsigned long long t1, unsigned long long t2, char *folder,
     last_time = new_last_time;
     retrieve_and_parse_html_index(
         url_request, last_time, &new_last_time, tree, &t1, &t2, folder_format,
-        url_format, previous_hash, current_hash, public_key_camera);
+        url_format, public_key_camera);
     if (last_time == new_last_time) {
       sleep(1);
       trials += 1;
     } else {
       trials = 0;
     }
-  }
-
-  if (previous_hash) {
-    OPENSSL_free(previous_hash);
-  }
-  if (current_hash) {
-    OPENSSL_free(current_hash);
   }
 
   return (EXIT_SUCCESS);

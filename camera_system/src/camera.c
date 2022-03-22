@@ -156,7 +156,6 @@ void start_capturing(int *fd, unsigned int n_buffers) {
 
 void mainloop(int *fd, bool *recording, unsigned int n_buffers,
               struct buffer **buffers, char *upload_url, key_tree *tree,
-              unsigned char *previous_hash, unsigned char *current_hash,
               EVP_PKEY *pkey, setup_ret_args_t *ret_args) {
   while (*recording) {
     fd_set fds;
@@ -183,8 +182,8 @@ void mainloop(int *fd, bool *recording, unsigned int n_buffers,
       exit(EXIT_FAILURE);
     }
 
-    if (read_frame(fd, n_buffers, buffers, recording, upload_url, tree,
-                   previous_hash, current_hash, pkey, ret_args) == EXIT_FAILURE)
+    if (read_frame(fd, n_buffers, buffers, recording, upload_url, tree, pkey,
+                   ret_args) == EXIT_FAILURE)
       break;
   }
 }
@@ -269,7 +268,6 @@ void uninit_device(unsigned int n_buffers, struct buffer **buffers) {
 
 int read_frame(int *fd, unsigned int n_buffers, struct buffer **buffers,
                bool *recording, char *upload_url, key_tree *tree,
-               unsigned char *previous_hash, unsigned char *current_hash,
                EVP_PKEY *pkey, setup_ret_args_t *ret_args) {
   struct v4l2_buffer buf;
   unsigned int i;
@@ -302,7 +300,7 @@ int read_frame(int *fd, unsigned int n_buffers, struct buffer **buffers,
     *recording = false; // stop capture for now and try to decode qr code
   } else {
     process_image((*buffers)[buf.index].start, buf.bytesused, recording,
-                  upload_url, tree, previous_hash, current_hash, pkey);
+                  upload_url, tree, pkey);
   }
 
   if (-1 == xioctl(*fd, VIDIOC_QBUF, &buf))
@@ -311,8 +309,7 @@ int read_frame(int *fd, unsigned int n_buffers, struct buffer **buffers,
 }
 
 void process_image(const void *p, int size, bool *recording, char *upload_url,
-                   key_tree *tree, unsigned char *previous_hash,
-                   unsigned char *current_hash, EVP_PKEY *pkey) {
+                   key_tree *tree, EVP_PKEY *pkey) {
   unsigned long long current_time = get_current_time_in_milliseconds();
   char filename[100];
   char filepath[100];
@@ -335,20 +332,30 @@ void process_image(const void *p, int size, bool *recording, char *upload_url,
   int iv_len = 16;
   unsigned char iv[iv_len];
   generateRandBytes(iv_len, iv);
-  int hash_len = 16;
-  current_hash = OPENSSL_malloc(hash_len);
-
-  cipher_len = gcm_encrypt((unsigned char *)p, size, NULL, 0, key, iv, iv_len,
-                           cipher, current_hash);
+  int tag_len = 16;
+  unsigned char tag[tag_len];
+  cipher_len =
+      gcm_encrypt((unsigned char *)p, size, (unsigned char *)&current_time,
+                  sizeof(unsigned long long), key, iv, iv_len, cipher, tag);
 #ifdef PERF
   unsigned long long time_after_encrypt = get_current_time_in_milliseconds();
 #endif
 
-  // write cipherdata + iv + tag/hash
+  // Signature (every frame is signed consider it as the worst-case scenario,
+  // as signing per block would require more modifications to the code)
+  int sig_len = 256;
+  unsigned char sig[sig_len];
+  sig_len = sign_rsa(tag, tag_len, sig, pkey);
+#ifdef PERF
+  unsigned long long time_after_signing = get_current_time_in_milliseconds();
+#endif
+
+  // write cipherdata + iv + tag + sign
   FILE *fp = fopen(filepath, "wb");
-  fwrite(cipher, cipher_len, 1, fp);     // add cipher
-  fwrite(iv, iv_len, 1, fp);             // add iv
-  fwrite(current_hash, hash_len, 1, fp); // add tag/hash
+  fwrite(cipher, cipher_len, 1, fp); // add cipher
+  fwrite(iv, iv_len, 1, fp);         // add iv
+  fwrite(tag, tag_len, 1, fp);       // add tag
+  fwrite(sig, sig_len, 1, fp);       // add sign
   fflush(fp);
   fclose(fp);
 #ifdef PERF
@@ -356,27 +363,22 @@ void process_image(const void *p, int size, bool *recording, char *upload_url,
 #endif
 
   OPENSSL_cleanse(iv, iv_len);
+  OPENSSL_cleanse(tag, tag_len);
   OPENSSL_cleanse(cipher, cipher_len);
-
-  if (previous_hash) {
-    OPENSSL_free(previous_hash);
-  }
-
-  previous_hash = current_hash;
-  current_hash = NULL;
+  OPENSSL_cleanse(sig, sig_len);
 
   char transfer_command[300];
   sprintf(transfer_command, "./transfer_file_http_post.sh %s %s %s &", filepath,
           filename, upload_url);
-  // printf("%s", transfer_command);
   if (!system(transfer_command)) {
     /* Errors ignored */
   }
 
 #ifdef PERF
   FILE *f = fopen("camera.csv", "a");
-  fprintf(f, "%llu,%llu,%llu,%llu\n", current_time, time_after_key_extraction,
-          time_after_encrypt, time_after_writing);
+  fprintf(f, "%llu,%llu,%llu,%llu,%llu\n", current_time,
+          time_after_key_extraction, time_after_encrypt, time_after_signing,
+          time_after_writing);
   fclose(f);
 #endif
 

@@ -157,14 +157,12 @@ int verify_hmac_sha256(unsigned char *message, int message_len,
 /*
  * https://wiki.openssl.org/index.php/EVP_Signing_and_Verifying
  */
-size_t sign_rsa(unsigned char *previous_hash, int previous_hash_len,
-                unsigned char *current_hash, int current_hash_len,
-                unsigned char *sig, EVP_PKEY *pkey);
+size_t sign_rsa(unsigned char *msg, int msg_len, unsigned char *sig,
+                EVP_PKEY *pkey);
 
 /*
  * https://wiki.openssl.org/index.php/EVP_Signing_and_Verifying
  */
-int verify_sign_rsa(unsigned char *previous_hash, int previous_hash_len,
-                    unsigned char *current_hash, int current_hash_len,
-                    unsigned char *sig, int sig_len, EVP_PKEY *pkey);
+int verify_sign_rsa(unsigned char *msg, int msg_len, unsigned char *sig,
+                    int sig_len, EVP_PKEY *pkey);
 #endif

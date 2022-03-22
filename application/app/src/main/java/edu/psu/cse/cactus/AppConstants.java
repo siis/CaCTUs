@@ -11,10 +11,10 @@ public interface AppConstants {
     String publicKeyThisPhone = "/data/data/com.example.CaCTUs/keys/public_key_this_phone.pem";
     String publicKeyOtherPhone = "/data/data/com.example.CaCTUs/keys/public_key_other_phone.pem";
     String MIME_TYPE = "video/avc";
-    int WIDTH = 1280;
-    int HEIGHT = 720;
+    int WIDTH = 640;
+    int HEIGHT = 480;
     int BIT_RATE = 4000000;
-    int FRAMES_PER_SECOND = 25;
+    int FRAMES_PER_SECOND = 10;
     int IFRAME_INTERVAL = 0;
 
     String APP_NAME = "CaCTUs";
