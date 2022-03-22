@@ -22,26 +22,26 @@ cmake_minimum_required(VERSION 3.4.1)
 
 # OPENSSL 3.0
 add_library(openssl STATIC IMPORTED)
-set_target_properties(openssl PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/openssl-3.0.2/build/lib/libssl.a)
+set_target_properties(openssl PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/libs/lib/libssl.a)
 add_library(crypto STATIC IMPORTED)
-set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/openssl-3.0.2/build/lib/libcrypto.a)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/openssl-3.0.2/build/include)
+set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/libs/lib/libcrypto.a)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/include)
 
 # ZLIB
 add_library(zlib STATIC IMPORTED)
-set_target_properties(zlib PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/zlib/build/lib/libz.a)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/zlib/build/include)
+set_target_properties(zlib PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/libs/lib/libz.a)
+#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/include)
 
 # CURL
 add_library(libcurl STATIC IMPORTED)
-set_target_properties(libcurl PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/curl/build/lib/libcurl.a)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/curl/build/include)
+set_target_properties(libcurl PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/libs/lib/libcurl.a)
+#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/include)
 
 # LIBTIDY
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tidy-html5 ${CMAKE_CURRENT_SOURCE_DIR}/tidy-html5/build)
+# add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tidy-html5 ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 add_library( libtidy STATIC IMPORTED )
-set_target_properties( libtidy PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/tidy-html5/build/libtidys.a )
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/tidy-html5/include )
+set_target_properties( libtidy PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/libs/lib/libtidy.a )
+#include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/libs/include )
 
 # PROJECT C CODE
 add_library(phone-lib SHARED ${CMAKE_CURRENT_SOURCE_DIR}/download/src/main.c ${CMAKE_CURRENT_SOURCE_DIR}/download/src/encryption.c ${CMAKE_CURRENT_SOURCE_DIR}/download/src/key_tree.c ${CMAKE_CURRENT_SOURCE_DIR}/download/src/download.c)

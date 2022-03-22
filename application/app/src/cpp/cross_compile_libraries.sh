@@ -24,18 +24,19 @@ zlib_folder=zlib
 curl_folder=curl
 tidy_folder=tidy-html5
 
-export CPPFLAGS="-I`pwd`/${zlib_folder}/build/include -I`pwd`/${openssl_folder}/build/include" #path to zlib and openssl header folder
-export LDFLAGS="-L`pwd`/${zlib_folder}/build/lib -L`pwd`/${openssl_folder}/build/lib" #path to zlib and openssl library folder
-export SSL_DIR="`pwd`/${openssl_folder}/build"
-export ZLIB_DIR="`pwd`/${zlib_folder}/build"
+# Install dir for cross-compiled libraries
+export INSTALL_DIR="`pwd`/libs"
+
+export CPPFLAGS="-I${INSTALL_DIR}/include" #path to zlib and openssl header folder
+export LDFLAGS="-L${INSTALL_DIR}/lib" #path to zlib and openssl library folder
+export SSL_DIR="${INSTALL_DIR}"
+export ZLIB_DIR="${INSTALL_DIR}"
 
 # OpenSSL
 echo "OpenSSL"
 cd $openssl_folder
 git checkout openssl-3.0.2
 git submodule update --init --recursive
-mkdir -p ./build
-export INSTALL_DIR="`pwd`/build"
 # For Nokia 4.2 we need to pick android-arm64 (modify accordingly to your architecture). You have to name your target explicitly; there are android-arm, android-arm64, android-mips, android-mip64, android-x86 and android-x86_64
 ./Configure android-arm64 -D__ANDROID_API_=$API --prefix=$INSTALL_DIR
 make
@@ -57,8 +58,6 @@ export STRIP=$TOOLCHAIN/bin/$TARGET-strip
 echo "zlib"
 cd $zlib_folder
 git checkout v1.2.11
-mkdir -p ./build
-export INSTALL_DIR="`pwd`/build"
 ./configure --prefix $INSTALL_DIR
 make
 make install
@@ -69,12 +68,12 @@ cd ..
 echo "curl"
 cd $curl_folder
 git checkout curl-7_82_0
-mkdir -p ./build
 autoreconf -fi
 ./configure --host=$TARGET --target=$TARGET --prefix=$INSTALL_DIR --without-ssl --without-zlib --disable-ftp --disable-gopher --disable-imap --disable-ldap --disable-ldaps --disable-pop3 --disable-proxy --disable-rtsp --disable-smtp --disable-telnet --disable-tftp --without-gnutls --without-libidn --without-librtmp --disable-dict
 make
 make install
 
+cd ..
 
 # tidy
 echo "tidy"
