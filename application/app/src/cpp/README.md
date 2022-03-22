@@ -4,7 +4,7 @@ C code and C Libraries for application
 
 * `curl`: dependency for download
 * `download`: C code to download and decrypt frames
-* `openssl3.0.2`: dependency for download
+* `openssl`: dependency for download
 * `tidy-html5`: dependency for download
 * `zlib`: dependency for download
 
