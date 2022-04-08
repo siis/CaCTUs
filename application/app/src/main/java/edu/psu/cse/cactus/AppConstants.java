@@ -6,7 +6,6 @@ public interface AppConstants {
     String framesFolder = "/data/data/com.example.CaCTUs/frames/";
     String outputFolder = "/data/data/com.example.CaCTUs/files/";
     String outputFile = "/data/data/com.example.CaCTUs/files/video";
-    String seedKeyAndIvFile = "/data/data/com.example.CaCTUs/keys/seedKey";
     String keysFolder = "/data/data/com.example.CaCTUs/keys/";
     String publicKeyThisPhone = "/data/data/com.example.CaCTUs/keys/public_key_this_phone.pem";
     String publicKeyOtherPhone = "/data/data/com.example.CaCTUs/keys/public_key_other_phone.pem";

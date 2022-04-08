@@ -57,14 +57,6 @@ void deserialize_config(config_t *cfg, struct CameraConfig *cam,
     sys->seed_key = NULL;
     read_key_from_config(cfg, &(sys->seed_key), "system.seed_key");
 
-    sys->factory_private_key_camera = NULL;
-    read_string_from_config(cfg, &(sys->factory_private_key_camera),
-                            "system.factory_private_key_camera");
-
-    sys->factory_public_key_camera = NULL;
-    read_string_from_config(cfg, &(sys->factory_public_key_camera),
-                            "system.factory_public_key_camera");
-
     sys->private_key_camera = NULL;
     read_string_from_config(cfg, &(sys->private_key_camera),
                             "system.private_key_camera");
@@ -76,10 +68,6 @@ void deserialize_config(config_t *cfg, struct CameraConfig *cam,
     sys->public_key_main_user = NULL;
     read_string_from_config(cfg, &(sys->public_key_main_user),
                             "system.public_key_main_user");
-
-    sys->recovery_escrow_material = NULL;
-    read_string_from_config(cfg, &(sys->recovery_escrow_material),
-                            "system.recovery_escrow_material");
   }
 }
 
@@ -110,21 +98,12 @@ void serialize_config(config_t *cfg, struct CameraConfig *cam,
 
     write_key_to_config(cfg, sys->seed_key, "system.seed_key");
 
-    config_setting_set_string(
-        config_lookup(cfg, "system.factory_private_key_camera"),
-        sys->factory_private_key_camera);
-    config_setting_set_string(
-        config_lookup(cfg, "system.factory_public_key_camera"),
-        sys->factory_public_key_camera);
     config_setting_set_string(config_lookup(cfg, "system.private_key_camera"),
                               sys->private_key_camera);
     config_setting_set_string(config_lookup(cfg, "system.public_key_camera"),
                               sys->public_key_camera);
     config_setting_set_string(config_lookup(cfg, "system.public_key_main_user"),
                               sys->public_key_main_user);
-    config_setting_set_string(
-        config_lookup(cfg, "system.recovery_escrow_material"),
-        sys->recovery_escrow_material);
   }
 }
 

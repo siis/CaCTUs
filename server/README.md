@@ -2,7 +2,7 @@
 
 For convenience in the deployment, we provide a `docker-compose.yml` configuration file.
 
-1. Edit the `nginx.conf` as well as the `srv` folder accordingly to the number of cameras you want to support. In the php files in the `srv` folder edit the user and password (`user1` and `password1` by default) that will be used to connect to the database and that we will configure in step 4. 
+1. Edit the `nginx.conf` as well as the `srv/` folder accordingly to the number of cameras you want to support. In the php files in the `srv/` folder edit the user and password (`user1` and `password1` by default) that will be used to connect to the database and that we will configure in step 4. 
 2. Create a volume to store the database-related information:
    ```
    docker volume create mariadb_vol
@@ -18,6 +18,7 @@ For convenience in the deployment, we provide a `docker-compose.yml` configurati
     MariaDB >CREATE USER 'user1'@'%' IDENTIFIED BY 'password1';
     MariaDB >GRANT ALL PRIVILEGES ON frames.* TO 'user1'@'%';
     MariaDB >FLUSH PRIVILEGES;
+    MariaDB >USE frames;
     ```
     Use the following SQL commands to create a table for each camera. Note: the placeholder `"X"` in `cameraX` was used to identify which camera was being used, if you have only one, you can leave it as is, drop it, or change it and adapt accordingly the other corresponding files on the web server, smartphone application, and camera system.
 
@@ -33,4 +34,4 @@ For convenience in the deployment, we provide a `docker-compose.yml` configurati
     ```
 Note: we additionally provide a `delete_frames.sh` and `truncate.php` scripts to facilitate clean up of files and database tables between several runs. These scripts must be adapted to the according number of camera devices and tables being used.
 
-Finally make sure that no firewall rule blocks connections to ports 80 and 8080 on your host.
+Finally make sure that no firewall rule blocks connections to ports `80` and `8080` on your host.

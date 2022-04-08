@@ -1,5 +1,4 @@
 ## Building a Privacy-Preserving Smart Camera System (PETS 2022)
-
 This repository contains the source code of the proof of concept used for the performance evaluation for the following [paper](https://arxiv.org/abs/2201.09338):
 ```
 Building a Privacy-Preserving Smart Camera System
@@ -37,14 +36,26 @@ We used a `Nokia 4.2` smartphone with Android 10 on which we have installed the 
 ### Cloud Storage
 An `AWS EC2 t3.small` instance was used to deploy a Nginx web server. Upon request, we serve the list of encrypted frames that were recorded during the time frame specified in the request.
 
+Note that the web server of CaCTUs does not require any particular hardware requirement (CPU/RAM). As this is a basic web interface, 1vCPU, 512MiB of RAM, and a few GB of storage should be enough. Thus, any instance you can deploy on the cloud platform of your choice and even the minimal option will work. 
+
 ---
 
 ## Code Organization
-
-
 The system (and the code) is composed of the three following components, please refer to the corresponding `README.md` file into each folder for more details: 
 1. **application:** Android application used for the performance evaluation
 2. **camera_system:** the C source code of the application to install on the Raspberry Pi used as the camera device 
 3. **server:** configuration files, database, and basic web interface to upload and download the encrypted frames
 
+### Keys Generation
 
+This proof of concept requires 2 pairs of assymmetric keys, one for the smartphone application of the main user and the other for the camera device. Use `openssl` to generate them:
+
+```
+openssl genrsa -out private_key_main_user.pem 2048
+openssl rsa -in private_key_main_user.pem -pubout -out public_key_main_user.pem
+
+openssl genrsa -out private_key_camera.pem 2048
+openssl rsa -in private_key_camera.pem -pubout -out public_key_camera.pem
+```
+
+Refer to the `README.md` files of the **application** and **camera_system** to know where to place these keys for these components to work.

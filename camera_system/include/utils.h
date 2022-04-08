@@ -49,10 +49,7 @@ struct SystemConfig {
   unsigned char *seed_key;
   char *private_key_camera;
   char *public_key_camera;
-  char *factory_private_key_camera;
-  char *factory_public_key_camera;
   char *public_key_main_user;
-  char *recovery_escrow_material;
 };
 
 int load_config(const char *filename, config_t *cfg);

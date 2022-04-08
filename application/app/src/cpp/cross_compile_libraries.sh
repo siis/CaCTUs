@@ -9,11 +9,13 @@ fi
 # Configure and build.
 PATH=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin:$ANDROID_NDK_ROOT/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin:$PATH
 
-# Only choose one of these, depending on your device...
+# Only choose one of these, depending on your device...  
+# The options are aarch64-linux-android, armv7a-linux-androideabi, i686-linux-android, x86_64-linux-android
 export TARGET=aarch64-linux-android
-#export TARGET=armv7a-linux-androideabi
-#export TARGET=i686-linux-android
-#export TARGET=x86_64-linux-android
+
+# For Nokia 4.2 we need to pick android-arm64 (modify accordingly to your architecture). 
+# You have to name your target explicitly; there are android-arm, android-arm64, android-mips, android-mip64, android-x86 and android-x86_64
+export TARGET_OPENSSL=android-arm64
 
 # Set this to your minSdkVersion.
 export API=28
@@ -37,8 +39,7 @@ echo "OpenSSL"
 cd $openssl_folder
 git checkout openssl-3.0.2
 git submodule update --init --recursive
-# For Nokia 4.2 we need to pick android-arm64 (modify accordingly to your architecture). You have to name your target explicitly; there are android-arm, android-arm64, android-mips, android-mip64, android-x86 and android-x86_64
-./Configure android-arm64 -D__ANDROID_API_=$API --prefix=$INSTALL_DIR
+./Configure $TARGET_OPENSSL -D__ANDROID_API_=$API --prefix=$INSTALL_DIR
 make
 make install
 

@@ -1,10 +1,10 @@
-This the code for the Raspberry Pi equipped with a Camera Pi Sensor Module that is used as camera device.
+This is the code for the Raspberry Pi equipped with a Camera Pi Sensor Module that is used as camera device.
 
 # Code structure
 
-* The `include` folder contains the `.h` files
-* The `src` folder contains the `.c` files, the Makefile, and the `obj` folder where `.o` files will be placed.
-* The `.devcontainer` folder contains the Dockerfile and the settings of the container that you can use for development with VScode.
+* The `include/` folder contains the `.h` files
+* The `src/` folder contains the `.c` files, the Makefile, the `img/` folder where the application temporarily stores the encrypted frames before uploading them, the `keys/` folder where the assymmetric keys of the camera device and the public key of the main user must be placed, and the `obj/` folder where `.o` files will be placed.
+* The `.devcontainer/` folder contains the Dockerfile and the settings of the container that you can use for development with VScode.
 
 # Raspberry Pi Camera Setup
 
@@ -19,20 +19,28 @@ Refer to the `setup_pi.sh` script for the different dependencies to install.
 
 ## Compilation
 
-Use the `make` utility with the provided Makefile.
+Use the `make` utility with the provided Makefile:
+```
+cd src/
+make
+```
 
-## Edit the config file
+## Config file, assymmetric keys, and execution
 
-Edit `src/config.cfg` with the correct configurations (hostname of the server, camera number, settings to use).
-The different private and public keys are hardcoded in this proof of concept, use `openssl` to generate them:
-* 2048 bits private key generation: `openssl genrsa -out private_key_filename.pem 2048`
-* Corresponding public key:  `openssl rsa -in private_key_filename.pem -pubout -out public_key_filename.pem`
+Edit `src/config.cfg` with the correct configurations (hostname of the server, camera number, settings to use). This is also where the locations of the public and private keys of the camera device and the public key of the main user are specified. Make sure that the corresponding keys are placed at these locations (in the `src/keys/` folder). 
 
+Then, you can run the application:
+```
+cd src/
+./main
+```
+
+Note: a counter is used in `camera.c` to stop the frame capture after some moment, edit the value of this counter or remove it depending on your use case.
 # Misc
 
 ## Troubleshooting OpenSSL 3.0
 
-You may face the following error, after the installation, after running `openssl version -a`: *openssl: error while loading shared libraries: libssl.so.3: cannot open shared object file: No such file or directory*. This can be solved by copying some files from `/usr/local/lib` to `/usr/lib` and creating symlinks:
+You may face the following error, after the installation, after running `openssl version -a`: *openssl: error while loading shared libraries: libssl.so.3: cannot open shared object file: No such file or directory*. This can be solved by copying some files from `/usr/local/lib/` to `/usr/lib/` and creating symlinks:
 ```
 sudo cp /usr/local/lib/libcrypto.so.3 /usr/local/lib/libcrypto.a /usr/local/lib/libssl.so.3 /usr/lib
 cd /usr/lib
