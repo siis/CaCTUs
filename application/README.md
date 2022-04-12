@@ -24,5 +24,5 @@
 # Performance Evaluation
 
 To enable performance logging, set `PERF` to `true` in  `app/src/main/java/edu/psu/cse/cactus/AppConstants.java`.
-Then, performance metrics will be saved to the `/data/data/com.example.cactus/rendering.csv` and `/data/data/com.example.cactus/phone.csv` logs.
+Then, performance metrics will be saved to the `/data/data/com.example.CaCTUs/rendering.csv` and `/data/data/com.example.CaCTUs/phone.csv` logs.
 

@@ -217,7 +217,7 @@ int download_file(const char *filename, unsigned long long last_time,
       if (PERF) {
         // Performance logging
         time_after_write_to_disk = get_current_time_in_milliseconds();
-        FILE *f = fopen("/data/data/com.example.videoapp/phone.csv", "a");
+        FILE *f = fopen("/data/data/com.example.CaCTUs/phone.csv", "a");
         fprintf(f, "%llu,%llu,%llu,%llu,%llu,%llu,%llu\n", file_time, time_before_download,
                 time_after_download, time_after_key_extraction, time_after_decryption_and_tag,
                 time_after_sign_verification, time_after_write_to_disk);

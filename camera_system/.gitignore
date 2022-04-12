@@ -1,7 +1,10 @@
-src/obj/*
-!src/obj/.gitkeep
+src/obj/perf/*.o
+!src/obj/perf/.gitkeep
+src/obj/*.o
 src/keys/*
 !src/keys/.gitkeep
 src/img/*
 !src/img/.gitkeep
 src/main
+src/perf_eval
+src/camera.csv

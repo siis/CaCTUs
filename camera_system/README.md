@@ -43,7 +43,7 @@ To log performance metrics to `camera.csv`, define the `PERF` macro before compi
 ```
 cd src/
 make perf_eval
-./main
+./perf_eval
 ```
 
 # Misc
