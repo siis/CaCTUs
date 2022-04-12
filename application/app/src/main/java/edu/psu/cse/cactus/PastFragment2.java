@@ -93,14 +93,14 @@ public class PastFragment2 extends Fragment implements SurfaceHolder.Callback, A
             this.suffix_frames_folder = (int) (Math.random() * 1000);
             this.suffix_frames_folder = checkFolder(this.suffix_frames_folder);
 
-            dThread = new DownloadFramesThread(t1, t2, this.suffix_frames_folder, depth_key_tree, key_rotation_time);
+            dThread = new DownloadFramesThread(t1, t2, this.suffix_frames_folder, depth_key_tree, key_rotation_time, this.PERF);
             dThread.start();
 
             //Download Frames and Decrypt them to render them to a file
             this.suffix_video_file = (int) (Math.random() * 1000);
             this.suffix_video_file = checkFolder(this.suffix_video_file);
 
-            dThreadFile = new DownloadFramesThread(t1, t2, this.suffix_video_file, depth_key_tree, key_rotation_time);
+            dThreadFile = new DownloadFramesThread(t1, t2, this.suffix_video_file, depth_key_tree, key_rotation_time, this.PERF);
             dThreadFile.start();
 
 //            mRenderer = new RenderFramesToFileThread(suffix_video_file);

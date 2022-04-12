@@ -15,6 +15,7 @@ public interface AppConstants {
     int BIT_RATE = 4000000;
     int FRAMES_PER_SECOND = 10;
     int IFRAME_INTERVAL = 0;
+    static final boolean PERF = false; // Performance logging
 
     String APP_NAME = "CaCTUs";
     UUID APP_UUID =

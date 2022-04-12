@@ -35,3 +35,19 @@ For convenience in the deployment, we provide a `docker-compose.yml` configurati
 Note: we additionally provide a `delete_frames.sh` and `truncate.php` scripts to facilitate clean up of files and database tables between several runs. These scripts must be adapted to the according number of camera devices and tables being used.
 
 Finally make sure that no firewall rule blocks connections to ports `80` and `8080` on your host.
+
+# Performance Evaluation
+
+For the performance evaluation, it could be useful to log when each frame has been uploaded:
+
+1. Add a new column to the corresponding table and define a new trigger:
+   ```
+    docker exec -it mariadb-cactus mysql -u user1 -p
+    MariaDB >USE frames;
+    MariaDB >ALTER TABLE cameraX ADD uploadtime BIGINT UNSIGNED;
+    MariaDB >CREATE TRIGGER before_insert_cameraX BEFORE INSERT ON cameraX FOR EACH ROW SET new.uploadtime = FLOOR(UNIX_TIMESTAMP(NOW(3))*1000);
+    ```
+2. To dump the database in `/tmp`: 
+    ```
+    mysqldump -u user1 -p -t -T/tmp frames --fields-enclosed-by=\" --fields-terminated-by=,
+    ```

@@ -36,6 +36,16 @@ cd src/
 ```
 
 Note: a counter is used in `camera.c` to stop the frame capture after some moment, edit the value of this counter or remove it depending on your use case.
+
+# Performance Evaluation
+
+To log performance metrics to `camera.csv`, define the `PERF` macro before compiling the code. Note: use the `make` utility with the provided Makefile:
+```
+cd src/
+make perf_eval
+./main
+```
+
 # Misc
 
 ## Troubleshooting OpenSSL 3.0

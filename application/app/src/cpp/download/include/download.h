@@ -20,6 +20,13 @@ struct enc_buf {
 };
 
 /* Local Data */
+bool PERF;
+unsigned long long int time_before_download;
+unsigned long long int time_after_download;
+unsigned long long int time_after_key_extraction;
+unsigned long long int time_after_decryption_and_tag;
+unsigned long long int time_after_sign_verification;
+unsigned long long time_after_write_to_disk;
 
 /* Functions */
 

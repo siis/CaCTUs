@@ -19,7 +19,6 @@ char seed_key[32] = {0x67, 0x70, 0xAF, 0xEA, 0xB,  0xCC, 0xE3, 0x33,
                      0x2,  0x67, 0x22, 0x7E, 0xDA, 0x85, 0xBA, 0x5F,
                      0x15, 0xEE, 0xCB, 0xB5, 0x76, 0xFB, 0xB9, 0x4D,
                      0x2D, 0xA3, 0x2A, 0xFC, 0xBE, 0x78, 0x21, 0xE5};
-
 /* Functions */
 
 int launch_download(unsigned long long t1, unsigned long long t2, char *folder,
@@ -87,7 +86,7 @@ int launch_download(unsigned long long t1, unsigned long long t2, char *folder,
 JNIEXPORT jint JNICALL
 Java_edu_psu_cse_cactus_DownloadFramesThread_runMainDownloadC(
     JNIEnv *env, jobject obj, jlong t1, jlong t2, jint suffix_frames_folder,
-    jint depth_key_tree, jint key_rotation_time) {
+    jint depth_key_tree, jint key_rotation_time, jboolean perf) {
   char *folder_base = "/data/data/com.example.CaCTUs/frames/";
   char folder[400];
   char int_buffer[4];
@@ -97,6 +96,7 @@ Java_edu_psu_cse_cactus_DownloadFramesThread_runMainDownloadC(
   strcat(folder, int_buffer);
   strcat(folder, "/");
 
+  PERF = (bool)perf;
   unsigned long long time1 = (unsigned long long)t1;
   unsigned long long time2 = (unsigned long long)t2;
 

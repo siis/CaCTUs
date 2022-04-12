@@ -271,15 +271,16 @@ public class RenderFramesToSurfaceThread extends Thread implements AppConstants 
             //draw on canvas
             canvas.drawBitmap(mBitmap, 0,0,null);
             //unlock canvas
-            try {
-                FileWriter myWriter = new FileWriter("/data/data/com.example.cactus/rendering.csv", true);
-                myWriter.write(String.valueOf(System.currentTimeMillis()) + ",\n");
-                myWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (this.PERF){
+                try {
+                    // Performance logging
+                    FileWriter myWriter = new FileWriter("/data/data/com.example.cactus/rendering.csv", true);
+                    myWriter.write(filename + "," + String.valueOf(System.currentTimeMillis()) + ",\n");
+                    myWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-
-
             inputSurface.unlockCanvasAndPost(canvas);
         } catch (Exception e){
             return;

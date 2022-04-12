@@ -13,10 +13,16 @@
 3. Connect the smartphone to your machine and allow access to Android Studio. Through Android Studio, open the Device Explorer and create the following:
   - `/data/data/com.example.CaCTUs/frames/`: the folder where the application will temporarily place the decrypted frames before being processed by the renderer.
   - `/data/data/com.example.CaCTUs/files/`: the folder where the application will export videos on user's demand
-  - `/data/data/com.example.CaCTUs/keys/`: the folder where the different assymmetric keys will be placed.
+  - `/data/data/com.example.CaCTUs/keys/`: the folder where the different asymmetric keys will be placed.
 
 4. Configure the following:
   - In `app/src/cpp/download/src/main.c` set `char *url`, `char *url_index`, and `char *pubkey_camera`. You will need to copy the public key generated for the camera on the smartphone at the location specified by `char *pubkey_camera`.
   - Note that the following file also contains a list of default settings:  `app/src/main/java/edu/psu/cse/cactus/AppConstants.java`.
 
 5. Install the application through Android Studio on your smartphone.
+
+# Performance Evaluation
+
+To enable performance logging, set `PERF` to `true` in  `app/src/main/java/edu/psu/cse/cactus/AppConstants.java`.
+Then, performance metrics will be saved to the `/data/data/com.example.cactus/rendering.csv` and `/data/data/com.example.cactus/phone.csv` logs.
+

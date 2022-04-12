@@ -1,4 +1,4 @@
-#include "download.h"as
+#include "download.h"
 
 // Callback function for CURL to fill Tidy's buffer
 size_t write_cb(char *in, size_t size, size_t nmemb, TidyBuffer *out) {
@@ -116,6 +116,11 @@ int download_file(const char *filename, unsigned long long last_time,
   unsigned long long file_time;
   sscanf(filename, "%llu", &file_time);
 
+  if (PERF) {
+    // Performance logging
+    time_before_download = get_current_time_in_milliseconds();
+  }
+
   char url_file[300];
   char filepath[300];
   // Define URL and path where to store the frames on the phone
@@ -146,6 +151,10 @@ int download_file(const char *filename, unsigned long long last_time,
 
     int err;
     err = curl_easy_perform(curl_handle); // perform curl operation
+    if (PERF) {
+      // Performance logging
+      time_after_download = get_current_time_in_milliseconds();
+    }
 
     if (err == CURLE_OK) {
       // retrieve decryption key
@@ -154,6 +163,10 @@ int download_file(const char *filename, unsigned long long last_time,
 
       if (!find_key_for_timestamp(file_time, tree, false, &key)) {
         exit(EXIT_FAILURE);
+      }
+      if (PERF) {
+        // Performance logging
+        time_after_key_extraction = get_current_time_in_milliseconds();
       }
 
       int iv_len = 16;
@@ -170,6 +183,10 @@ int download_file(const char *filename, unsigned long long last_time,
       unsigned char decrypted_text[enc_frame.len - iv_len - tag_len - sig_len];
       decrypted_len = gcm_decrypt(enc_frame.ptr, enc_frame.len - iv_len - tag_len - sig_len, (unsigned char *) &file_time, sizeof(unsigned long long), tag,
                               key,  iv, iv_len, decrypted_text);
+      if (PERF) {
+        // Performance logging
+        time_after_decryption_and_tag = get_current_time_in_milliseconds();
+      }
 
       if (decrypted_len < 0){
         __android_log_write(ANDROID_LOG_INFO, "verification tag is", "incorrect");
@@ -180,6 +197,10 @@ int download_file(const char *filename, unsigned long long last_time,
       if (verify_sign_rsa(tag, tag_len,enc_frame.ptr + enc_frame.len - sig_len, sig_len, pkey) != EXIT_SUCCESS){
           __android_log_write(ANDROID_LOG_INFO, "verification signature is", "incorrect");
           exit(EXIT_FAILURE);
+      }
+      if (PERF) {
+        // Performance logging
+        time_after_sign_verification = get_current_time_in_milliseconds();
       }
 
       OPENSSL_cleanse(iv, iv_len);
@@ -193,6 +214,15 @@ int download_file(const char *filename, unsigned long long last_time,
       fclose(fp);
 
       OPENSSL_cleanse(decrypted_text, decrypted_len);
+      if (PERF) {
+        // Performance logging
+        time_after_write_to_disk = get_current_time_in_milliseconds();
+        FILE *f = fopen("/data/data/com.example.videoapp/phone.csv", "a");
+        fprintf(f, "%llu,%llu,%llu,%llu,%llu,%llu,%llu\n", file_time, time_before_download,
+                time_after_download, time_after_key_extraction, time_after_decryption_and_tag,
+                time_after_sign_verification, time_after_write_to_disk);
+        fclose(f);
+      }
 
 
     } else {

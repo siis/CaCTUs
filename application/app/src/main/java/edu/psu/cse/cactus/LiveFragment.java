@@ -45,7 +45,7 @@ public class LiveFragment extends Fragment implements SurfaceHolder.Callback, Ap
             this.suffix_frames_folder = (int) (Math.random() * 1000);
             this.suffix_frames_folder = checkFolder(this.suffix_frames_folder);
 
-            dThread = new DownloadFramesThread(System.currentTimeMillis(), seed_leaf_time_sup, this.suffix_frames_folder, depth_key_tree, key_rotation_time);
+            dThread = new DownloadFramesThread(System.currentTimeMillis(), seed_leaf_time_sup, this.suffix_frames_folder, depth_key_tree, key_rotation_time, this.PERF);
             dThread.start();
 
             view = inflater.inflate(R.layout.fragment_live, container, false);

@@ -59,3 +59,7 @@ openssl rsa -in private_key_camera.pem -pubout -out public_key_camera.pem
 ```
 
 Refer to the `README.md` files of the **application** and **camera_system** to know where to place these keys for these components to work.
+
+### Performance Evaluation
+
+To enable performance logging, refer to the **Performance Evaluation** section of the `README.md` files of the **application**, **camera_system**, and **server**.
