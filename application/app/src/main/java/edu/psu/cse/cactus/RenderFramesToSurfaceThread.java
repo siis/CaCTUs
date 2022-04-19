@@ -275,7 +275,7 @@ public class RenderFramesToSurfaceThread extends Thread implements AppConstants 
                 try {
                     // Performance logging
                     FileWriter myWriter = new FileWriter("/data/data/com.example.CaCTUs/rendering.csv", true);
-                    myWriter.write(filename + "," + String.valueOf(System.currentTimeMillis()) + ",\n");
+                    myWriter.write(filename + "," + String.valueOf(System.currentTimeMillis()) + "\n");
                     myWriter.close();
                 } catch (IOException e) {
                     e.printStackTrace();

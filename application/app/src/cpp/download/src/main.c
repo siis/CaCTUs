@@ -33,31 +33,28 @@ int launch_download(unsigned long long t1, unsigned long long t2, char *folder,
   key_tree *tree =
       create_key_tree(depth_key_tree, key_rotation_time, seed_leaf);
 
-  unsigned long long last_time = 1;
-  unsigned long long new_last_time = 0;
-  int trials = 0;
-
   char *url = "http://server_ip_or_hostname/cameraX/";
   char *url_index = "http://server_ip_or_hostname/indexX.php?t1=";
   char *pubkey_camera =
       "/data/data/com.example.CaCTUs/keys/public_key_camera.pem";
+  unsigned long long last_time = 0;
+  unsigned long long new_last_time = t1;
+  int trials = 0;
 
   char url_format[200];
   char url_request[300];
   char folder_format[100];
   char buffert1[30];
   char buffert2[30];
-  sprintf(buffert1, "%llu", t1);
-  sprintf(buffert2, "%llu", t2);
+
   memset(url_format, '\0', sizeof(url_format));
   memset(folder_format, '\0', sizeof(folder_format));
-  memset(url_request, '\0', sizeof(url_request));
+
+  sprintf(buffert2, "%llu", t2);
+
   strcpy(url_format, url);
   strcat(url_format, "%llu");
-  strcpy(url_request, url_index);
-  strcat(url_request, buffert1);
-  strcat(url_request, "&t2=");
-  strcat(url_request, buffert2);
+
   strcpy(folder_format, folder);
   strcat(folder_format, "%llu");
 
@@ -68,10 +65,17 @@ int launch_download(unsigned long long t1, unsigned long long t2, char *folder,
   }
 
   while (last_time != new_last_time || trials < 60) {
+
     last_time = new_last_time;
+    memset(url_request, '\0', sizeof(url_request));
+    sprintf(buffert1, "%llu", last_time);
+    strcpy(url_request, url_index);
+    strcat(url_request, buffert1);
+    strcat(url_request, "&t2=");
+    strcat(url_request, buffert2);
+
     retrieve_and_parse_html_index(
-        url_request, last_time, &new_last_time, tree, &t1, &t2, folder_format,
-        url_format, public_key_camera);
+        url_request, last_time, &new_last_time, tree, folder_format, url_format, public_key_camera);
     if (last_time == new_last_time) {
       sleep(1);
       trials += 1;

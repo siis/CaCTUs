@@ -9,8 +9,7 @@ size_t write_cb(char *in, size_t size, size_t nmemb, TidyBuffer *out) {
 
 // parse HTML index to obtain the href links
 void parse(TidyNode node, unsigned long long last_time,
-           unsigned long long *new_last_time, key_tree *tree,
-           unsigned long long *t1, unsigned long long *t2, char *folder_format,
+           unsigned long long *new_last_time, key_tree *tree, char *folder_format,
            char *url_format, EVP_PKEY *pkey) {
   TidyNode child;
 
@@ -20,12 +19,11 @@ void parse(TidyNode node, unsigned long long last_time,
     // look for href attribute
     TidyAttr hrefAttr = tidyAttrGetById(child, TidyAttr_HREF);
     if (hrefAttr && tidyAttrValue(hrefAttr)) {
-      download_file(tidyAttrValue(hrefAttr), last_time, new_last_time, tree, t1,
-                    t2, folder_format, url_format, pkey);
+      download_file(tidyAttrValue(hrefAttr), last_time, new_last_time, tree, folder_format, url_format, pkey);
     }
 
     // recursive call to traverse the tree
-    parse(child, last_time, new_last_time, tree, t1, t2, folder_format,
+    parse(child, last_time, new_last_time, tree, folder_format,
           url_format, pkey);
   }
 }
@@ -33,15 +31,12 @@ void parse(TidyNode node, unsigned long long last_time,
 // get content of a website and store it in a buffer
 int retrieve_and_parse_html_index(char *url, unsigned long long last_time,
                                   unsigned long long *new_last_time,
-                                  key_tree *tree, unsigned long long *t1,
-                                  unsigned long long *t2, char *folder_format,
-                                  char *url_format,
-                                  EVP_PKEY *pkey) {
+                                  key_tree *tree, char *folder_format,
+                                  char *url_format, EVP_PKEY *pkey) {
 
   // CURL
   CURL *curl_handle;
   char curl_errbuf[CURL_ERROR_SIZE];
-
 
   curl_handle = curl_easy_init();                  // init session
   curl_easy_setopt(curl_handle, CURLOPT_URL, url); // set url
@@ -71,8 +66,7 @@ int retrieve_and_parse_html_index(char *url, unsigned long long last_time,
 
   if (err == CURLE_OK) {
     tidyParseBuffer(index_doc, &index_buf); // parse with Tidy
-    parse(tidyGetBody(index_doc), last_time, new_last_time, tree, t1, t2,
-          folder_format, url_format, pkey);
+    parse(tidyGetBody(index_doc), last_time, new_last_time, tree, folder_format, url_format, pkey);
   } else {
     fprintf(stderr, "%s\n", curl_errbuf);
     exit(EXIT_FAILURE);
@@ -109,26 +103,31 @@ size_t write_enc_buf(void *ptr, size_t size, size_t nmemb,
 
 int download_file(const char *filename, unsigned long long last_time,
                   unsigned long long *new_last_time, key_tree *tree,
-                  unsigned long long *t1, unsigned long long *t2,
-                  char *folder_format, char *url_format,
-                  EVP_PKEY *pkey) {
+                  char *folder_format, char *url_format, EVP_PKEY *pkey) {
 
   unsigned long long file_time;
   sscanf(filename, "%llu", &file_time);
-
-  if (PERF) {
-    // Performance logging
-    time_before_download = get_current_time_in_milliseconds();
-  }
-
-  char url_file[300];
-  char filepath[300];
-  // Define URL and path where to store the frames on the phone
-  sprintf(url_file, url_format, file_time);
-  sprintf(filepath, folder_format, file_time);
+  time_before_download = get_current_time_in_milliseconds();
 
   if (file_time > last_time) {
     *new_last_time = file_time;
+
+    // Frame Dropping
+    if ( ( (double)rand()) / RAND_MAX >= 1000.0/(time_before_download - file_time) ) {
+      if (PERF) {
+        FILE *f = fopen("/data/data/com.example.CaCTUs/rendering.csv", "a");
+        fprintf(f, "%llu,None\n", file_time);
+        fclose(f);
+      }
+      return EXIT_SUCCESS;
+    }
+
+    char url_file[300];
+    char filepath[300];
+    // Define URL and path where to store the frames on the phone
+    sprintf(url_file, url_format, file_time);
+    sprintf(filepath, folder_format, file_time);
+
 
     struct enc_buf enc_frame;
     init_enc_buf(&enc_frame);
@@ -175,28 +174,34 @@ int download_file(const char *filename, unsigned long long last_time,
       unsigned char tag[tag_len];
       int sig_len = 256;
 
-      memcpy(iv, enc_frame.ptr + enc_frame.len - iv_len - tag_len - sig_len, iv_len);
+      memcpy(iv, enc_frame.ptr + enc_frame.len - iv_len - tag_len - sig_len,
+             iv_len);
       memcpy(tag, enc_frame.ptr + enc_frame.len - tag_len - sig_len, tag_len);
 
       // Decrypt
       int decrypted_len;
       unsigned char decrypted_text[enc_frame.len - iv_len - tag_len - sig_len];
-      decrypted_len = gcm_decrypt(enc_frame.ptr, enc_frame.len - iv_len - tag_len - sig_len, (unsigned char *) &file_time, sizeof(unsigned long long), tag,
-                              key,  iv, iv_len, decrypted_text);
+      decrypted_len =
+          gcm_decrypt(enc_frame.ptr, enc_frame.len - iv_len - tag_len - sig_len,
+                      (unsigned char *)&file_time, sizeof(unsigned long long),
+                      tag, key, iv, iv_len, decrypted_text);
       if (PERF) {
         // Performance logging
         time_after_decryption_and_tag = get_current_time_in_milliseconds();
       }
 
-      if (decrypted_len < 0){
-        __android_log_write(ANDROID_LOG_INFO, "verification tag is", "incorrect");
+      if (decrypted_len < 0) {
+        __android_log_write(ANDROID_LOG_INFO, "verification tag is",
+                            "incorrect");
         exit(EXIT_FAILURE);
       }
       // Verify signature
       unsigned char sig[sig_len];
-      if (verify_sign_rsa(tag, tag_len,enc_frame.ptr + enc_frame.len - sig_len, sig_len, pkey) != EXIT_SUCCESS){
-          __android_log_write(ANDROID_LOG_INFO, "verification signature is", "incorrect");
-          exit(EXIT_FAILURE);
+      if (verify_sign_rsa(tag, tag_len, enc_frame.ptr + enc_frame.len - sig_len,
+                          sig_len, pkey) != EXIT_SUCCESS) {
+        __android_log_write(ANDROID_LOG_INFO, "verification signature is",
+                            "incorrect");
+        exit(EXIT_FAILURE);
       }
       if (PERF) {
         // Performance logging
@@ -218,12 +223,12 @@ int download_file(const char *filename, unsigned long long last_time,
         // Performance logging
         time_after_write_to_disk = get_current_time_in_milliseconds();
         FILE *f = fopen("/data/data/com.example.CaCTUs/phone.csv", "a");
-        fprintf(f, "%llu,%llu,%llu,%llu,%llu,%llu,%llu\n", file_time, time_before_download,
-                time_after_download, time_after_key_extraction, time_after_decryption_and_tag,
+        fprintf(f, "%llu,%llu,%llu,%llu,%llu,%llu,%llu\n", file_time,
+                time_before_download, time_after_download,
+                time_after_key_extraction, time_after_decryption_and_tag,
                 time_after_sign_verification, time_after_write_to_disk);
         fclose(f);
       }
-
 
     } else {
       fprintf(stderr, "%s\n", curl_errbuf);

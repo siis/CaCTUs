@@ -36,20 +36,17 @@ size_t write_cb(char *in, size_t size, size_t nmemb, TidyBuffer *out);
 // retrieve and parse HTML index page
 int retrieve_and_parse_html_index(char *url, unsigned long long last_time,
                                   unsigned long long *new_last_time,
-                                  key_tree *tree, unsigned long long *t1,
-                                  unsigned long long *t2, char *folder_format,
+                                  key_tree *tree, char *folder_format,
                                   char *url_format, EVP_PKEY *pkey);
 
 // parse HTML page to retrieve <a href="link"> links
 void parse(TidyNode node, unsigned long long last_time,
-           unsigned long long *new_last_time, key_tree *tree,
-           unsigned long long *t1, unsigned long long *t2, char *folder_format,
+           unsigned long long *new_last_time, key_tree *tree, char *folder_format,
            char *url_format, EVP_PKEY *pkey);
 
 // process each link
 int download_file(const char *filename, unsigned long long last_time,
                   unsigned long long *new_last_time, key_tree *tree,
-                  unsigned long long *t1, unsigned long long *t2,
                   char *folder_format, char *url_format, EVP_PKEY *pkey);
 
 // utils function
