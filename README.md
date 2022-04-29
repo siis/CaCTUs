@@ -1,3 +1,9 @@
+https://user-images.githubusercontent.com/32905060/166064743-312eafa6-5a71-4a1d-bfd5-f9c7291f9606.mp4
+
+[You can also find the video on YouTube (better quality)](https://www.youtube.com/watch?v=Id47oUMi7j8)
+
+---
+
 ## Building a Privacy-Preserving Smart Camera System (PETS 2022)
 This repository contains the source code of the proof of concept used for the performance evaluation for the following [paper](https://arxiv.org/abs/2201.09338):
 ```
