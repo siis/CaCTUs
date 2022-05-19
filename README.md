@@ -13,7 +13,7 @@ Yohan Beugin, Quinn Burke, Blaine Hoak, Ryan Sheatsley, Eric Pauley, Gang Tan, S
 ```
 
 To cite the paper: 
-```
+```bibtex
 @inproceedings{beugin_building_2022,
 	title = {Building a {Privacy}-{Preserving} {Smart} {Camera} {System}},
 	booktitle = {Proceedings on {Privacy} {Enhancing} {Technologies} {Symposium} ({PETS})},
