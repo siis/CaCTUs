@@ -1,0 +1,28 @@
+{
+  "creators": [
+    {
+      "name": "Yohan Beugin",
+      "affiliation": "The Pennsylvania State University",
+      "orcid": "0000-0003-0991-7926"
+    }
+  ],
+  "title": "CaCTUs: a privacy-preserving smart Camera system Controlled Totally by Users",
+  "version": "petsymposium-artifact2022.2",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "https://doi.org/10.2478/popets-2022-0034",
+      "relation": "isSupplementTo",
+      "resource_type": "publication-article"
+    }
+  ],
+  "keywords": [
+    "Computer Science",
+    "Privacy",
+    "Security Camera",
+    "Smart Camera",
+    "End-to-end Encryption"
+  ],
+  "license": "gpl-3.0-or-later",
+  "upload_type": "software"
+}

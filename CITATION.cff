@@ -1,0 +1,71 @@
+cff-version: 1.2.0
+title: "CaCTUs: a privacy-preserving smart Camera system Controlled Totally by Users"
+message: "If you use this software, please cite both the associated paper (see preferred-citation) and the software itself."
+type: software
+authors:
+  - given-names: Yohan
+    family-names: Beugin
+    affiliation: The Pennsylvania State University
+    orcid: https://orcid.org/0000-0003-0991-7926
+license: "GPL-3.0-or-later"
+version: petsymposium-artifact2022.2
+date-released: "2021-12-01"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.17584311
+    description: "The concept DOI that represent all versions and will always resolve to the latest one"
+  - type: doi
+    value: 10.5281/zenodo.17584312
+    description: "The versioned DOI for the version petsymposium-artifact2022.2 of the classifier"
+repository-code: https://github.com/siis/CaCTUs
+abstract: Software artifact for the paper "Building a Privacy-Preserving Smart Camera System" (PETS 2022)
+preferred-citation:
+  title: Building a Privacy-Preserving Smart Camera System
+  type: article
+  authors:
+    - given-names: Yohan
+      family-names: Beugin
+      affiliation: The Pennsylvania State University
+      orcid: https://orcid.org/0000-0003-0991-7926
+    - given-names: Quinn
+      family-names: Burke
+      affiliation: The Pennsylvania State University
+      orcid: https://orcid.org/0000-0003-1719-3112
+    - given-names: Blaine
+      family-names: Hoak
+      affiliation: The Pennsylvania State University
+      orcid: https://orcid.org/0000-0003-2960-0686
+    - given-names: Ryan
+      family-names: Sheatsley
+      affiliation: The Pennsylvania State University
+      orcid: https://orcid.org/0000-0001-8447-602X
+    - given-names: Eric
+      family-names: Pauley
+      affiliation: The Pennsylvania State University
+      orcid: https://orcid.org/0000-0002-2197-9137
+    - given-names: Gang
+      family-names: Tan
+      affiliation: The Pennsylvania State University
+      orcid: https://orcid.org/0000-0001-6109-6091
+    - given-names: Syed Rafiul
+      family-names: Hussain
+      affiliation: The Pennsylvania State University
+      orcid: https://orcid.org/0000-0001-9222-8544
+    - given-names: Patrick
+      family-names: McDaniel
+      affiliation: The Pennsylvania State University
+      orcid: https://orcid.org/0000-0003-2091-7484
+  journal: Proceedings on Privacy Enhancing Technologies Symposium
+  conference:
+    name: 22nd Privacy Enhancing Technologies Symposium (PETS 2022)
+    city: Sydney
+    country: AU
+  year: 2022
+  month: 7
+  doi: https://doi.org/10.2478/popets-2022-0034
+keywords:
+  - Computer Science
+  - Privacy
+  - Security Camera
+  - Smart Camera
+  - End-to-end Encryption

@@ -5,6 +5,8 @@ https://user-images.githubusercontent.com/32905060/166064743-312eafa6-5a71-4a1d-
 ---
 
 ## Building a Privacy-Preserving Smart Camera System (PETS 2022)
+[![DOI](https://zenodo.org/badge/433898427.svg)](https://doi.org/10.5281/zenodo.17584311)
+
 This repository contains the source code of the proof of concept used for the performance evaluation for the following [paper](https://arxiv.org/abs/2201.09338):
 ```
 Building a Privacy-Preserving Smart Camera System
