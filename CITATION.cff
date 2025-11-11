@@ -16,7 +16,7 @@ identifiers:
     description: "The concept DOI that represent all versions and will always resolve to the latest one"
   - type: doi
     value: 10.5281/zenodo.17584312
-    description: "The versioned DOI for the version petsymposium-artifact2022.2 of the classifier"
+    description: "The versioned DOI for the version petsymposium-artifact2022.2 of the software"
 repository-code: https://github.com/siis/CaCTUs
 abstract: Software artifact for the paper "Building a Privacy-Preserving Smart Camera System" (PETS 2022)
 preferred-citation:
